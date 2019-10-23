@@ -25,10 +25,6 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="AssemblyInfo.cs" />
     <Compile Remove="zxcvbn-test\ZxcvbnTest.cs" />
     <Compile Remove="zxcvbn-test\Properties\AssemblyInfo.cs" />
