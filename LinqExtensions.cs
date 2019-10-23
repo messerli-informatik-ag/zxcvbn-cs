@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Zxcvbn
 {
     /// <summary>
     /// Useful shared Linq extensions
     /// </summary>
-    static class LinqExtensions
+    internal static class LinqExtensions
     {
         /// <summary>
         /// Used to group elements by a key function, but only where elements are adjacent
@@ -36,8 +35,10 @@ namespace Zxcvbn
                         yield return new AdjacentGrouping<TKey, TSource>(key, itemsList, prevStartIndex, i - 1);
 
                         prevKey = key;
-                        itemsList = new List<TSource>();
-                        itemsList.Add(item);
+                        itemsList = new List<TSource>
+                        {
+                            item
+                        };
                         prevStartIndex = i;
                     }
                     else
@@ -55,32 +56,25 @@ namespace Zxcvbn
                 i++;
             }
 
-            if (prevInit) yield return new AdjacentGrouping<TKey, TSource>(prevKey, itemsList, prevStartIndex, i - 1); ;
+            if (prevInit) yield return new AdjacentGrouping<TKey, TSource>(prevKey, itemsList, prevStartIndex, i - 1);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// A single grouping from the GroupAdjacent function, includes start and end indexes for the grouping in addition to standard IGrouping bits
         /// </summary>
         /// <typeparam name="TElement">Type of grouped elements</typeparam>
         /// <typeparam name="TKey">Type of key used for grouping</typeparam>
-        public class AdjacentGrouping<TKey, TElement> :  IGrouping<TKey, TElement>, IEnumerable<TElement>
+        public class AdjacentGrouping<TKey, TElement> : IGrouping<TKey, TElement>
         {
-            /// <summary>
-            /// The key value for this grouping
-            /// </summary>
-            public TKey Key
-            {
-                get;
-                private set;
-            }
+            private readonly IEnumerable<TElement> _mGroupItems;
 
-            /// <summary>
-            /// The start index in the source enumerable for this group (i.e. index of first element)
-            /// </summary>
-            public int StartIndex
+            internal AdjacentGrouping(TKey key, IEnumerable<TElement> groupItems, int startIndex, int endIndex)
             {
-                get;
-                private set;
+                Key = key;
+                StartIndex = startIndex;
+                EndIndex = endIndex;
+                _mGroupItems = groupItems;
             }
 
             /// <summary>
@@ -89,29 +83,33 @@ namespace Zxcvbn
             public int EndIndex
             {
                 get;
-                private set;
             }
 
-            private IEnumerable<TElement> m_groupItems;
-
-            internal AdjacentGrouping(TKey key, IEnumerable<TElement> groupItems, int startIndex, int endIndex)
+            /// <inheritdoc />
+            /// <summary>
+            /// The key value for this grouping
+            /// </summary>
+            public TKey Key
             {
-                this.Key = key;
-                this.StartIndex = startIndex;
-                this.EndIndex = endIndex;
-                m_groupItems = groupItems;
+                get;
             }
 
-            private AdjacentGrouping() { }
+            /// <summary>
+            /// The start index in the source enumerable for this group (i.e. index of first element)
+            /// </summary>
+            public int StartIndex
+            {
+                get;
+            }
 
             IEnumerator<TElement> IEnumerable<TElement>.GetEnumerator()
             {
-                return m_groupItems.GetEnumerator();
+                return _mGroupItems.GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
             {
-                return m_groupItems.GetEnumerator();
+                return _mGroupItems.GetEnumerator();
             }
         }
     }

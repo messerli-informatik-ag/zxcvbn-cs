@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Zxcvbn.Matcher
 {
@@ -12,10 +9,10 @@ namespace Zxcvbn.Matcher
     {
         /// <summary>
         /// This function is called once for each matcher for each password being evaluated. It should perform the matching process and return
-        /// an enumerable of Match objects for each match found.
+        /// an enumerable of PasswordMatch objects for each match found.
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        IEnumerable<Match> MatchPassword(string password);
+        IEnumerable<PasswordMatch> MatchPassword(string password);
     }
 }
