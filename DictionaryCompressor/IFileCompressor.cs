@@ -1,11 +1,9 @@
 ﻿namespace DictionaryCompressor
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-
-    interface IFileCompressor
+    public interface IFileCompressor
     {
-        void Compress(string path);
+        void CompressFile(string filePath, string output);
+
+        void CompressDirectory(string directoryPath, string output);
     }
 }

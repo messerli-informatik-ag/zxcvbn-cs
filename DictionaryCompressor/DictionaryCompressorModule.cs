@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Core;
+using DictionaryCompressor.CommandLineParsing;
+using DictionaryCompressor.CommandLineParsing.Parser;
 
 namespace DictionaryCompressor
 {

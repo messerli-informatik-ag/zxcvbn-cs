@@ -4,4 +4,5 @@ source https://www.nuget.org/api/v2
 source http://nuget.messerli.ch/v3/index.json
 
 nuget Autofac ~> 4.8
-nuget StyleCop.Analyzers ~> 1.1.118 
+nuget StyleCop.Analyzers ~> 1.1.118
+nuget System.CommandLine.Experimental ~> 0.3.0-dev
