@@ -27,7 +27,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\zxcvbn-cs.csproj" />
     <ProjectReference Include="..\zxcvbn-cs\zxcvbn-cs.csproj" />
   </ItemGroup>
 </Project>
