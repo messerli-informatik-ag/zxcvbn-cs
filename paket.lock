@@ -1,0 +1,5 @@
+RESTRICTION: || (== netcoreapp3.0) (== netstandard2.1)
+NUGET
+  remote: https://www.nuget.org/api/v2
+    Autofac (4.9.4)
+    StyleCop.Analyzers (1.1.118)

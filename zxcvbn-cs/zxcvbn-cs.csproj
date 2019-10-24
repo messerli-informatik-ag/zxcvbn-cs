@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{E80F559C-B5EB-4F14-9E3F-686A9C0237BF}</ProjectGuid>
+    <RootNamespace>zxcvbn</RootNamespace>
+    <AssemblyName>zxcvbn</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFrameworks>netstandard2.1;net46</TargetFrameworks>
+    <!-- TargetFrameworkProfile>Client</TargetFrameworkProfile -->
+    <AssemblyTitle>Zxcvbn</AssemblyTitle>
+    <Product>Zxcvbn</Product>
+    <Description>C#/.NET port of Dan Wheeler/DropBox's Zxcvbn JS password strength estimation library</Description>
+    <Copyright>Copyright 2016</Copyright>
+    <Version>1.0.0.0</Version>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+    <Authors>Michael Ford</Authors>
+    <PackageLicenseUrl>https://github.com/mickford/zxcvbn-cs/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/mickford/zxcvbn-cs</PackageProjectUrl>
+    <PackageTags>zxcvbn password</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Dictionaries\**" />
+    <Compile Remove="zxcvbn-test\**" />
+    <EmbeddedResource Remove="Dictionaries\**" />
+    <EmbeddedResource Remove="zxcvbn-test\**" />
+    <None Remove="Dictionaries\**" />
+    <None Remove="zxcvbn-test\**" />
+  </ItemGroup>
+</Project>

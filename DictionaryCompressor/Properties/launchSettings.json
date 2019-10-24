@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DictionaryCompressor": {
+      "commandName": "Project",
+      "commandLineArgs": "Dictionary.lst Dictionary1.lst"
+    }
+  }
+}

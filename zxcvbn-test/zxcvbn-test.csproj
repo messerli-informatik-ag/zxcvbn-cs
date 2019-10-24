@@ -28,5 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\zxcvbn-cs.csproj" />
+    <ProjectReference Include="..\zxcvbn-cs\zxcvbn-cs.csproj" />
   </ItemGroup>
 </Project>

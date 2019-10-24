@@ -1,0 +1,7 @@
+framework netcoreapp3.0, netstandard2.1
+
+source https://www.nuget.org/api/v2
+source http://nuget.messerli.ch/v3/index.json
+
+nuget Autofac ~> 4.8
+nuget StyleCop.Analyzers ~> 1.1.118 
