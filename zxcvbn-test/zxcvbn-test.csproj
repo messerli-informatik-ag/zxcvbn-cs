@@ -29,4 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\zxcvbn-cs\zxcvbn-cs.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>
