@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "DictionaryCompressor": {
-      "commandName": "Project",
-      "commandLineArgs": "--files C:\\Users\\sutter\\Desktop\\deutsch.lst"
-    }
-  }
-}

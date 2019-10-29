@@ -287,3 +287,6 @@ Shared/Package.Test/Messerli.Update.Shared.Package.Test.xml
 Shared/Package/Messerli.Update.Shared.Package.xml
 Shared/Version.Test/Messerli.Update.Shared.Version.Test.xml
 Shared/Version/Messerli.Update.Shared.Version.xml
+
+# Ignore launchSettings.json
+**/Properties/launchSettings.json
