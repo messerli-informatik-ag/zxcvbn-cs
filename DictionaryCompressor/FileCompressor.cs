@@ -12,18 +12,19 @@ namespace DictionaryCompressor
             FileInfo file = new FileInfo(filePath);
             using (FileStream originalFileStream = file.OpenRead())
             {
-                if ((File.GetAttributes(file.FullName) & FileAttributes.Hidden)
-                    != FileAttributes.Hidden & file.Extension != ".cmp")
+                if (!IsFileValid(file))
                 {
-                    output ??= file.DirectoryName;
+                    return;
+                }
 
-                    var compressedFileName = Path.GetFullPath(Path.Combine(output, file.Name + ".cmp"));
-                    using (FileStream compressedFileStream = File.Create(compressedFileName))
+                output ??= file.DirectoryName;
+
+                var compressedFileName = Path.GetFullPath(Path.Combine(output, file.Name + ".cmp"));
+                using (FileStream compressedFileStream = File.Create(compressedFileName))
+                {
+                    using (DeflateStream compressionStream = new DeflateStream(compressedFileStream, CompressionLevel.Optimal))
                     {
-                        using (DeflateStream compressionStream = new DeflateStream(compressedFileStream, CompressionLevel.Optimal))
-                        {
-                            originalFileStream.CopyTo(compressionStream);
-                        }
+                        originalFileStream.CopyTo(compressionStream);
                     }
                 }
             }
@@ -33,6 +34,12 @@ namespace DictionaryCompressor
         {
             DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
             directorySelected.GetFiles().ToList().ForEach(file => CompressFile(file.FullName, output));
+        }
+
+        private static bool IsFileValid(FileInfo file)
+        {
+            var isFileHidden = (File.GetAttributes(file.FullName) & FileAttributes.Hidden) == FileAttributes.Hidden;
+            return !isFileHidden && file.Extension != ".cmp";
         }
     }
 }
