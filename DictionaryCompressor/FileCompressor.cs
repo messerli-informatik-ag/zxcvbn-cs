@@ -2,46 +2,56 @@
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
+using Messerli.FileOpeningBuilder;
 
 namespace DictionaryCompressor
 {
     internal class FileCompressor : IFileCompressor
     {
-        private const string CompressedFileExtension = ".cmp";
+        private readonly IFileOpeningBuilder _fileOpeningBuilder;
+        private readonly IFileCompression _fileCompression;
+
+        public FileCompressor(IFileOpeningBuilder fileOpeningBuilder, IFileCompression fileCompression)
+        {
+            _fileOpeningBuilder = fileOpeningBuilder;
+            _fileCompression = fileCompression;
+        }
 
         public void CompressFile(string filePath, string output)
         {
-            var file = new FileInfo(filePath);
-            using (var originalFileStream = file.OpenRead())
+            using (var uncompressedStream = _fileOpeningBuilder
+                .Read(true)
+                .Open(filePath))
+
+            using (var compressedStream = _fileOpeningBuilder
+                .Create(true)
+                .Write(true)
+                .Open(CompressedFilePath(filePath, output)))
             {
-                if (!IsFileValid(file))
-                {
-                    return;
-                }
-
-                output ??= file.DirectoryName;
-
-                var compressedFileName = Path.GetFullPath(Path.Combine(output, file.Name + CompressedFileExtension));
-                using (var compressedFileStream = File.Create(compressedFileName))
-                {
-                    using (var compressionStream = new DeflateStream(compressedFileStream, CompressionLevel.Optimal))
-                    {
-                        originalFileStream.CopyTo(compressionStream);
-                    }
-                }
+                _fileCompression.Compress(uncompressedStream, compressedStream);
             }
         }
 
         public void CompressDirectory(string directoryPath, string output)
         {
             DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
+
+            // TODO only valid files
             directorySelected.GetFiles().ToList().ForEach(file => CompressFile(file.FullName, output));
         }
 
-        private static bool IsFileValid(FileInfo file)
+        private string CompressedFilePath(string filePath, string output)
+        {
+            var file = new FileInfo(filePath);
+            output ??= file.DirectoryName;
+            return Path.GetFullPath(Path.Combine(output, file.Name + _fileCompression.FileExtension));
+        }
+
+        private bool IsFileValid(FileInfo file)
         {
             var isFileHidden = (File.GetAttributes(file.FullName) & FileAttributes.Hidden) == FileAttributes.Hidden;
-            return !isFileHidden && file.Extension != CompressedFileExtension;
+            return !isFileHidden && file.Extension != _fileCompression.FileExtension;
         }
     }
 }
