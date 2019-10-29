@@ -7,6 +7,8 @@ namespace DictionaryCompressor
 {
     internal class FileCompressor : IFileCompressor
     {
+        private const string CompressedFileExtension = ".cmp";
+
         public void CompressFile(string filePath, string output)
         {
             var file = new FileInfo(filePath);
@@ -19,7 +21,7 @@ namespace DictionaryCompressor
 
                 output ??= file.DirectoryName;
 
-                var compressedFileName = Path.GetFullPath(Path.Combine(output, file.Name + ".cmp"));
+                var compressedFileName = Path.GetFullPath(Path.Combine(output, file.Name + CompressedFileExtension));
                 using (var compressedFileStream = File.Create(compressedFileName))
                 {
                     using (var compressionStream = new DeflateStream(compressedFileStream, CompressionLevel.Optimal))
@@ -39,7 +41,7 @@ namespace DictionaryCompressor
         private static bool IsFileValid(FileInfo file)
         {
             var isFileHidden = (File.GetAttributes(file.FullName) & FileAttributes.Hidden) == FileAttributes.Hidden;
-            return !isFileHidden && file.Extension != ".cmp";
+            return !isFileHidden && file.Extension != CompressedFileExtension;
         }
     }
 }
