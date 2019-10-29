@@ -14,6 +14,7 @@ namespace DictionaryCompressor
             builder.RegisterType<FileCompressor>().As<IFileCompressor>();
             builder.RegisterType<FileOpeningBuilder>().As<IFileOpeningBuilder>();
             builder.RegisterType<FileCompression>().As<IFileCompression>();
+            builder.RegisterType<FileEnumerator>().As<IFileEnumerator>();
         }
     }
 }

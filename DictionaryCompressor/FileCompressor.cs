@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using Messerli.FileOpeningBuilder;
+using Messerli.Utility.Extension;
 
 namespace DictionaryCompressor
 {
@@ -11,11 +12,13 @@ namespace DictionaryCompressor
     {
         private readonly IFileOpeningBuilder _fileOpeningBuilder;
         private readonly IFileCompression _fileCompression;
+        private readonly IFileEnumerator _fileEnumerator;
 
-        public FileCompressor(IFileOpeningBuilder fileOpeningBuilder, IFileCompression fileCompression)
+        public FileCompressor(IFileOpeningBuilder fileOpeningBuilder, IFileCompression fileCompression, IFileEnumerator fileEnumerator)
         {
             _fileOpeningBuilder = fileOpeningBuilder;
             _fileCompression = fileCompression;
+            _fileEnumerator = fileEnumerator;
         }
 
         public void CompressFile(string filePath, string output)
@@ -35,10 +38,9 @@ namespace DictionaryCompressor
 
         public void CompressDirectory(string directoryPath, string output)
         {
-            DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
-
-            // TODO only valid files
-            directorySelected.GetFiles().ToList().ForEach(file => CompressFile(file.FullName, output));
+            _fileEnumerator.GetFiles(new DirectoryInfo(directoryPath))
+                .Where(IsFileValid)
+                .ForEach(file => CompressFile(file.FullName, output));
         }
 
         private string CompressedFilePath(string filePath, string output)

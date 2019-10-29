@@ -8,7 +8,7 @@ namespace DictionaryCompressor
 {
     internal class FileCompression : IFileCompression
     {
-        string IFileCompression.FileExtension => ".cmd";
+        string IFileCompression.FileExtension => ".cmp";
 
         public void Compress(Stream from, Stream to)
         {
