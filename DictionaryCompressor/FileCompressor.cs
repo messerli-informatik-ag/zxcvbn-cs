@@ -9,8 +9,8 @@ namespace DictionaryCompressor
     {
         public void CompressFile(string filePath, string output)
         {
-            FileInfo file = new FileInfo(filePath);
-            using (FileStream originalFileStream = file.OpenRead())
+            var file = new FileInfo(filePath);
+            using (var originalFileStream = file.OpenRead())
             {
                 if (!IsFileValid(file))
                 {
@@ -20,9 +20,9 @@ namespace DictionaryCompressor
                 output ??= file.DirectoryName;
 
                 var compressedFileName = Path.GetFullPath(Path.Combine(output, file.Name + ".cmp"));
-                using (FileStream compressedFileStream = File.Create(compressedFileName))
+                using (var compressedFileStream = File.Create(compressedFileName))
                 {
-                    using (DeflateStream compressionStream = new DeflateStream(compressedFileStream, CompressionLevel.Optimal))
+                    using (var compressionStream = new DeflateStream(compressedFileStream, CompressionLevel.Optimal))
                     {
                         originalFileStream.CopyTo(compressionStream);
                     }
