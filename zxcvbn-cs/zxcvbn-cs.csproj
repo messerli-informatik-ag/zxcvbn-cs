@@ -29,7 +29,5 @@
     <Compile Remove="zxcvbn-test\**" />
     <EmbeddedResource Remove="Dictionaries\**" />
     <EmbeddedResource Remove="zxcvbn-test\**" />
-    <None Remove="Dictionaries\**" />
-    <None Remove="zxcvbn-test\**" />
   </ItemGroup>
 </Project>
