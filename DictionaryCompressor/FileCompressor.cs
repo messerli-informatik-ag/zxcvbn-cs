@@ -24,6 +24,11 @@ namespace DictionaryCompressor
 
         public void CompressFile(string filePath, string output)
         {
+            if (IsFileValid(new FileInfo(filePath)))
+            {
+                throw new FileNotFoundException();
+            }
+
             using (var uncompressedStream = _fileOpeningBuilder
                 .Read(true)
                 .Open(filePath))
