@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -38,9 +39,13 @@ namespace DictionaryCompressor
 
         public void CompressDirectory(string directoryPath, string output)
         {
-            _fileEnumerator.GetFiles(new DirectoryInfo(directoryPath))
-                .Where(IsFileValid)
-                .ForEach(file => CompressFile(file.FullName, output));
+            GetValidUncompressedDirectoryFiles(directoryPath).ForEach(file => CompressFile(file.FullName, output));
+        }
+
+        private IReadOnlyCollection<FileInfo> GetValidUncompressedDirectoryFiles(string directoryPath)
+        {
+            return _fileEnumerator.GetFiles(new DirectoryInfo(directoryPath))
+                .Where(IsFileValid).ToList();
         }
 
         private string CompressedFilePath(string filePath, string output)
