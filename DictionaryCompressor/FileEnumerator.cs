@@ -9,10 +9,10 @@ namespace DictionaryCompressor
 {
     internal class FileEnumerator : IFileEnumerator
     {
-        public IReadOnlyCollection<FileInfo> GetFiles(DirectoryInfo path)
+        public IReadOnlyCollection<string> GetFiles(string path)
         {
-            var files = new List<FileInfo>();
-            path.GetFiles().ForEach(file => files.Add(file));
+            var files = new List<string>();
+            Directory.GetFiles(path).ForEach(file => files.Add(file));
             return files;
         }
     }

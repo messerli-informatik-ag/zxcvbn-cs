@@ -24,7 +24,7 @@ namespace DictionaryCompressor
 
         public void CompressFile(string filePath, string output)
         {
-            if (IsFileValid(new FileInfo(filePath)))
+            if (!IsFileValid(filePath))
             {
                 throw new FileNotFoundException();
             }
@@ -44,26 +44,25 @@ namespace DictionaryCompressor
 
         public void CompressDirectory(string directoryPath, string output)
         {
-            GetValidUncompressedDirectoryFiles(directoryPath).ForEach(file => CompressFile(file.FullName, output));
+            GetValidUncompressedDirectoryFiles(directoryPath).ForEach(file => CompressFile(file, output));
         }
 
-        private IReadOnlyCollection<FileInfo> GetValidUncompressedDirectoryFiles(string directoryPath)
+        private IReadOnlyCollection<string> GetValidUncompressedDirectoryFiles(string directoryPath)
         {
-            return _fileEnumerator.GetFiles(new DirectoryInfo(directoryPath))
+            return _fileEnumerator.GetFiles(directoryPath)
                 .Where(IsFileValid).ToList();
         }
 
         private string CompressedFilePath(string filePath, string output)
         {
-            var file = new FileInfo(filePath);
-            output ??= file.DirectoryName;
-            return Path.GetFullPath(Path.Combine(output, file.Name + _fileCompression.FileExtension));
+            output ??= Path.GetDirectoryName(filePath);
+            return Path.GetFullPath(Path.Combine(output, Path.GetFileName(filePath) + _fileCompression.FileExtension));
         }
 
-        private bool IsFileValid(FileInfo file)
+        private bool IsFileValid(string file)
         {
-            var isFileHidden = (File.GetAttributes(file.FullName) & FileAttributes.Hidden) == FileAttributes.Hidden;
-            return !isFileHidden && file.Extension != _fileCompression.FileExtension;
+            var isFileHidden = (File.GetAttributes(file) & FileAttributes.Hidden) == FileAttributes.Hidden;
+            return !isFileHidden && file != _fileCompression.FileExtension;
         }
     }
 }

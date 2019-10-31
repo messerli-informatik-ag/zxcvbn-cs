@@ -7,6 +7,6 @@ namespace DictionaryCompressor
 {
     public interface IFileEnumerator
     {
-        IReadOnlyCollection<FileInfo> GetFiles(DirectoryInfo path);
+        IReadOnlyCollection<string> GetFiles(string path);
     }
 }

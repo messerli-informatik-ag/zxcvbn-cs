@@ -19,10 +19,10 @@ namespace DictionaryCompressorTest
                 .Build())
             {
                 FileEnumerator fileEnumerator = new FileEnumerator();
-                var files = fileEnumerator.GetFiles(new DirectoryInfo(testEnvironmentBuilder.RootDirectory));
+                var files = fileEnumerator.GetFiles(testEnvironmentBuilder.RootDirectory);
 
                 Assert.Single(files);
-                Assert.Equal(files.First().Name, fileName);
+                Assert.Equal(Path.GetFileName(files.First()), fileName);
             }
         }
     }
