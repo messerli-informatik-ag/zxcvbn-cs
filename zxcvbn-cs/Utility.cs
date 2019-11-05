@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.IO;
+using System.IO.Compression;
 
 namespace Zxcvbn
 {
@@ -199,20 +200,25 @@ namespace Zxcvbn
         /// <returns>An enumerable of lines of text in the resource or null if the resource does not exist</returns>
         public static IEnumerable<string> GetEmbeddedResourceLines(string resourceName)
         {
-            var asm = Assembly.GetExecutingAssembly();
+            var asm = typeof(Utility).GetTypeInfo().Assembly;
+
             if (!asm.GetManifestResourceNames().Contains(resourceName)) return null; // Not an embedded resource
 
             var lines = new List<string>();
 
             using (var stream = asm.GetManifestResourceStream(resourceName))
-            using (var text = new StreamReader(stream))
             {
-                while (!text.EndOfStream)
+                using (DeflateStream decompressionStream = new DeflateStream(stream, CompressionMode.Decompress))
                 {
-                    lines.Add(text.ReadLine());
+                    using (var text = new StreamReader(decompressionStream))
+                    {
+                        while (!text.EndOfStream)
+                        {
+                            lines.Add(text.ReadLine());
+                        }
+                    }
                 }
             }
-
             return lines;
         }
 
