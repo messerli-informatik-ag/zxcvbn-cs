@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Zxcvbn;
 
@@ -89,7 +87,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void RunAllTestPasswords()
         {
-            var zx = new Zxcvbn.PasswordMetric(new Zxcvbn.DefaultMatcherFactory());
+            var zx = new Zxcvbn.Zxcvbn(new Zxcvbn.DefaultMatcherFactory());
 
             for (int i = 0; i < testPasswords.Length; ++i)
             {
@@ -215,13 +213,13 @@ namespace zxcvbn_test
             Assert.AreEqual(2, res.Count());
 
             var m1 = res.ElementAt(0);
-            Assert.AreEqual(0, m1.Begin);
-            Assert.AreEqual(2, m1.End);
+            Assert.AreEqual(0, m1.i);
+            Assert.AreEqual(2, m1.j);
             Assert.AreEqual("aaa", m1.Token);
 
             var m2 = res.ElementAt(1);
-            Assert.AreEqual(5, m2.Begin);
-            Assert.AreEqual(8, m2.End);
+            Assert.AreEqual(5, m2.i);
+            Assert.AreEqual(8, m2.j);
             Assert.AreEqual("ffff", m2.Token);
 
 
@@ -237,21 +235,21 @@ namespace zxcvbn_test
             var res = seq.MatchPassword("abcd");
             Assert.AreEqual(1, res.Count());
             var m1 = res.First();
-            Assert.AreEqual(0, m1.Begin);
-            Assert.AreEqual(3, m1.End);
+            Assert.AreEqual(0, m1.i);
+            Assert.AreEqual(3, m1.j);
             Assert.AreEqual("abcd", m1.Token);
 
             res = seq.MatchPassword("asdfabcdhujzyxwhgjj");
             Assert.AreEqual(2, res.Count());
 
             m1 = res.ElementAt(0);
-            Assert.AreEqual(4, m1.Begin);
-            Assert.AreEqual(7, m1.End);
+            Assert.AreEqual(4, m1.i);
+            Assert.AreEqual(7, m1.j);
             Assert.AreEqual("abcd", m1.Token);
 
             var m2 = res.ElementAt(1);
-            Assert.AreEqual(11, m2.Begin);
-            Assert.AreEqual(14, m2.End);
+            Assert.AreEqual(11, m2.i);
+            Assert.AreEqual(14, m2.j);
             Assert.AreEqual("zyxw", m2.Token);
 
             res = seq.MatchPassword("dfsjkhfjksdh");
@@ -266,8 +264,8 @@ namespace zxcvbn_test
             var res = re.MatchPassword("abc123def");
             Assert.AreEqual(1, res.Count());
             var m1 = res.First();
-            Assert.AreEqual(3, m1.Begin);
-            Assert.AreEqual(5, m1.End);
+            Assert.AreEqual(3, m1.i);
+            Assert.AreEqual(5, m1.j);
             Assert.AreEqual("123", m1.Token);
 
             res = re.MatchPassword("123456789a12345b1234567");
@@ -327,8 +325,8 @@ namespace zxcvbn_test
             Assert.AreEqual(6, res.Count());
             var m1 = res.First();
             Assert.AreEqual("qwert", m1.Token);
-            Assert.AreEqual(0, m1.Begin);
-            Assert.AreEqual(4, m1.End);
+            Assert.AreEqual(0, m1.i);
+            Assert.AreEqual(4, m1.j);
 
             res = sm.MatchPassword("plko14569852pyfdb");
             Assert.AreEqual(16, res.Count()); // Multiple matches from different keyboard types
@@ -348,7 +346,8 @@ namespace zxcvbn_test
         [TestMethod]
         public void DictionaryTest()
         {
-            var dm = new Zxcvbn.Matcher.DictionaryMatcher("test", "zxcvbn.zxcvbn_test.test_dictionary.lst.cmp");
+            var dm = new Zxcvbn.Matcher.DictionaryMatcher("test", "test_dictionary.txt");
+
             var res = dm.MatchPassword("NotInDictionary");
             Assert.AreEqual(0, res.Count());
 
@@ -382,14 +381,14 @@ namespace zxcvbn_test
         [TestMethod]
         public void EmptyPassword()
         {
-            var res = Zxcvbn.PasswordMetric.MatchPassword("");
+            var res = Zxcvbn.Zxcvbn.MatchPassword("");
             Assert.AreEqual(0, res.Entropy);
         }
 
         [TestMethod]
         public void SinglePasswordTest()
         {
-            var res = Zxcvbn.PasswordMetric.MatchPassword("||ke");
+            var res = Zxcvbn.Zxcvbn.MatchPassword("||ke");
         }
 
         //Warning for the testPasswords array according to https://dl.dropboxusercontent.com/u/209/zxcvbn/test/index.html but adapted since this is an old version
@@ -431,13 +430,104 @@ namespace zxcvbn_test
         };
 
         [TestMethod]
+        public void WarningTest()
+        {
+            var zx = new Zxcvbn.Zxcvbn(new Zxcvbn.DefaultMatcherFactory());
+
+            for (int i = 0; i < testPasswords.Length; ++i)
+            {
+                var password = testPasswords[i];
+                var expectedWarning = testWarnings[i];
+
+                var result = zx.EvaluatePassword(password);
+                var realWarning = Utility.GetWarning(result.warning);
+                O("");
+                O("Password:         {0}", result.Password);
+                O("Warning:          {0}", realWarning);
+                O("Expected Warning: {0}", expectedWarning);
+
+
+                O("");
+                O("=========================================");
+
+                Assert.AreEqual(realWarning, expectedWarning);
+            }
+
+        }
+
+        private static string[,] testSuggestions = new string[,]{
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "Use a longer keyboard pattern with more turns","" },
+            { "Add another word or two. Uncommon words are better.", "Capitalization doesn't help very much","Predictable substitutions like '@' instead of 'a' don't help very much" },
+            { "", "","" },
+            { "", "","" },
+            { "Add another word or two. Uncommon words are better.", "Avoid repeated words and characters","" },
+            { "Add another word or two. Uncommon words are better.", "Avoid sequences","" },
+            { "", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" }, //original library gives 4/4 score here while this library gives 0
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "Predictable substitutions like '@' instead of 'a' don't help very much","" },
+            { "", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },//original library gives 3/4 score here while this library gives 0
+            { "Add another word or two. Uncommon words are better.", "","" },//original library gives 3/4 score here while this library gives 0
+            { "Add another word or two. Uncommon words are better.", "Use a longer keyboard pattern with more turns","" },//original library gives 3/4 score here while this library gives 2
+            { "Add another word or two. Uncommon words are better.", "Use a longer keyboard pattern with more turns","" },//
+            { "Add another word or two. Uncommon words are better.", "All-uppercase is almost as easy to guess as all-lowercase","" },
+            { "Add another word or two. Uncommon words are better.", "Avoid sequences","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "Capitalization doesn't help very much","" },
+            { "Add another word or two. Uncommon words are better.", "All-uppercase is almost as easy to guess as all-lowercase","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
+            { "Add another word or two. Uncommon words are better.", "Predictable substitutions like '@' instead of 'a' don't help very much","" },
+            { "Add another word or two. Uncommon words are better.", "Predictable substitutions like '@' instead of 'a' don't help very much","" },
+            { "Add another word or two. Uncommon words are better.", "Predictable substitutions like '@' instead of 'a' don't help very much","" },
+            { "Add another word or two. Uncommon words are better.", "All-uppercase is almost as easy to guess as all-lowercase","" },//
+            { "", "","" },
+            { "", "","" },
+            { "", "","" },
+        };
+
+        [TestMethod]
+        public void SuggestionsTest()
+        {
+            var zx = new Zxcvbn.Zxcvbn(new Zxcvbn.DefaultMatcherFactory());
+
+            for (int i = 0; i < testPasswords.Length; ++i)
+            {
+                var password = testPasswords[i];
+
+                var result = zx.EvaluatePassword(password);
+                O("");
+                O("Password:         {0}", result.Password);
+                for(int j =0; j< result.suggestions.Count();++j)
+                {
+                    var realSuggestion = Utility.GetSuggestion(result.suggestions[j]);
+                    var expectedSuggestion = testSuggestions[i,j];
+                    O("Suggestion:          {0}", realSuggestion);
+                    O("Expected Suggestion: {0}", expectedSuggestion);
+
+
+                    Assert.AreEqual(realSuggestion, expectedSuggestion);
+                }
+
+                O("");
+                O("=========================================");
+            }
+
+        }
+        [TestMethod]
         public void SinglePasswordTest2()
         {
             //var res = Zxcvbn.Zxcvbn.MatchPassword("p@sswordpassword");
             //var res = Zxcvbn.Zxcvbn.MatchPassword("Password");
             // var res = Zxcvbn.Zxcvbn.MatchPassword("qwER43@!");
             //var res = Zxcvbn.Zxcvbn.MatchPassword("temppass22");
-            var res = Zxcvbn.PasswordMetric.MatchPassword("abcabc");
+            var res = Zxcvbn.Zxcvbn.MatchPassword("abcabc");
                         
         }
     }

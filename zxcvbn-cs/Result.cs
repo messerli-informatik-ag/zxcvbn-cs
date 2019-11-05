@@ -224,6 +224,37 @@ namespace Zxcvbn
         public List<Suggestion> suggestions { get; set; }
 
 
+
+
+        private const double GoodPasswordEntropy = 40.0;
+        private const double baseBrightness = 191.0;
+        /// <summary>
+        /// Returns a Color representing how good a password is
+        ///  (0 = bad = red, medium = yellow, good = green)
+        /// </summary>
+        /// <param name="goodValue">this is the value in bits which is represented in green</param>
+        /// <returns>Color between red, yellow, green</returns>
+        public System.Drawing.Color PasswordStrengthColor
+        {
+            get
+            {
+                // Gradient from red (0.0) yellow (0.5) to green (1.0)
+                int red = (int)System.Math.Min(128.0f * (1 - GetNormalizedMetric()) + baseBrightness, 255.0);
+                int green = (int)System.Math.Min(128.0f * GetNormalizedMetric() + baseBrightness, 255.0);
+                int blue = (int)baseBrightness;
+
+                return System.Drawing.Color.FromArgb(red, green, blue);
+            }
+        }
+
+        /// <summary>
+        /// Returns a normalized strength value between 0.0 and 1.0 
+        /// </summary>
+        /// <returns>Value between 0.0 WORST and 1.0 GOOD</returns>
+        private double GetNormalizedMetric()
+        {
+            return System.Math.Min(Entropy / GoodPasswordEntropy, 1.0);
+        }
     }
 
     /// <summary>

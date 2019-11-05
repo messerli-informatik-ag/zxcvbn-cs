@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Zxcvbn.Matcher
 {
-    /// <inheritdoc />
     /// <summary>
     /// <para>This matcher attempts to guess dates, with and without date separators. e.g. 1197 (could be 1/1/97) through to 18/12/2015.</para>
+    /// 
     /// <para>The format for matching dates is quite particular, and only detected years in the range 00-99 and 1900-2019 are considered by
     /// this matcher.</para>
     /// </summary>
@@ -66,9 +67,9 @@ namespace Zxcvbn.Matcher
         /// <param name="password">The passsord to check</param>
         /// <returns>An enumerable of date matches</returns>
         /// <seealso cref="T:Zxcvbn.Matcher.DateMatch" />
-        public IEnumerable<PasswordMatch> MatchPassword(string password)
+        public IEnumerable<Match> MatchPassword(string password)
         {
-            var matches = new List<PasswordMatch>();
+            var matches = new List<Match>();
 
             for (var i = 0; i <= password.Length - 4; i++)
             {
@@ -119,8 +120,8 @@ namespace Zxcvbn.Matcher
                     {
                         Pattern = DatePattern,
                         Token = dateMatch.Value,
-                        Begin = i,
-                        End = j + i - 1,
+                        i = i,
+                        j = j + i - 1,
                         Separator = "",
                         Year = bestCandidate.Year,
                         Month = bestCandidate.Month,
@@ -152,8 +153,8 @@ namespace Zxcvbn.Matcher
                     {
                         Pattern = DatePattern,
                         Token = token,
-                        Begin = i,
-                        End= j + i - 1,
+                        i = i,
+                        j = j + i - 1,
                         Separator = match.Groups[2].Value,
                         Year = date.Value.Year,
                         Month = date.Value.Month,
@@ -171,7 +172,7 @@ namespace Zxcvbn.Matcher
                 {
                     if (m == n)
                         continue;
-                    if (n.Begin <= m.Begin && n.End >= m.End)
+                    if (n.i <= m.i && n.j >= m.j)
                         return false;
                 }
 
@@ -181,19 +182,21 @@ namespace Zxcvbn.Matcher
             return filteredMatches;
         }
 
-        private static double CalculateEntropy(string match, int? year, bool separator)
+        private double CalculateEntropy(string match, int? year, bool separator)
         {
             // The entropy calculation is pretty straightforward
 
             // This is a slight departure from the zxcvbn case where the match has the actual year so the two-year vs four-year
-            //   can always be known rather than guessed for strings without separators.
+            //   can always be known rather than guessed for strings without separators. 
             if (!year.HasValue)
             {
                 // Guess year length from string length
                 year = match.Length <= 6 ? 99 : 9999;
             }
 
-            var entropy = year < 100 ? Math.Log(31 * 12 * 100, 2) : Math.Log(31 * 12 * 119, 2);
+            var entropy = 0.0;
+            if (year < 100) entropy = Math.Log(31 * 12 * 100, 2); // 100 years (two-digits)
+            else entropy = Math.Log(31 * 12 * 119, 2); // 119 years (four digit years valid range)
 
             if (separator) entropy += 2; // Extra two bits for separator (/\...)
 
@@ -279,4 +282,31 @@ namespace Zxcvbn.Matcher
             return year + 2000;
         }
     }
+
+    /// <summary>
+    /// A match found by the date matcher
+    /// </summary>
+    public class DateMatch : Match
+    {
+        /// <summary>
+        /// The detected year
+        /// </summary>
+        public int Year { get; set; }
+
+        /// <summary>
+        /// The detected month
+        /// </summary>
+        public int Month { get; set; }
+
+        /// <summary>
+        /// The detected day
+        /// </summary>
+        public int Day { get; set; }
+
+        /// <summary>
+        /// Where a date with separators is matched, this will contain the separator that was used (e.g. '/', '-')
+        /// </summary>
+        public string Separator { get; set; }
+    }
+
 }

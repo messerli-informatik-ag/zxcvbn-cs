@@ -1,21 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Zxcvbn.Matcher;
 
 namespace Zxcvbn
 {
-    /// <inheritdoc />
     /// <summary>
     /// <para>This matcher factory will use all of the default password matchers.</para>
+    /// 
     /// <para>Default dictionary matchers use the built-in word lists: passwords, english, male_names, female_names, surnames</para>
     /// <para>Also matching against: user data, all dictionaries with l33t substitutions</para>
     /// <para>Other default matchers: repeats, sequences, digits, years, dates, spatial</para>
-    /// <para>See <see cref="T:Zxcvbn.Matcher.IMatcher" /> and the classes that implement it for more information on each kind of pattern matcher.</para>
+    /// 
+    /// <para>See <see cref="IMatcher"/> and the classes that implement it for more information on each kind of pattern matcher.</para>
     /// </summary>
-    internal class DefaultMatcherFactory : IMatcherFactory
+    class DefaultMatcherFactory : IMatcherFactory
     {
-        private readonly List<IMatcher> _matchers;
+        List<IMatcher> matchers;
 
         private IEnumerable<string> DictionaryResources()
         {
@@ -38,7 +41,7 @@ namespace Zxcvbn
                 dictionaryMatchers.Add(new DictionaryMatcher(name, resource));
             }
 
-            _matchers = new List<IMatcher> {
+            matchers = new List<IMatcher> {
                 new RepeatMatcher(),
                 new SequenceMatcher(),
                 new RegexMatcher("\\d{3,}", 10, true, "digits"),
@@ -47,8 +50,8 @@ namespace Zxcvbn
                 new SpatialMatcher()
             };
 
-            _matchers.AddRange(dictionaryMatchers);
-            _matchers.Add(new L33tMatcher(dictionaryMatchers));
+            matchers.AddRange(dictionaryMatchers);
+            matchers.Add(new L33tMatcher(dictionaryMatchers));
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Zxcvbn
             var userInputDict = new DictionaryMatcher("user_inputs", userInputs);
             var leetUser = new L33tMatcher(userInputDict);
 
-            return _matchers.Union(new List<IMatcher> { userInputDict, leetUser });
+            return matchers.Union(new List<IMatcher> { userInputDict, leetUser });
         }
     }
 }

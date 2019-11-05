@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Zxcvbn
 {
     /// <summary>
     /// Useful shared Linq extensions
     /// </summary>
-    internal static class LinqExtensions
+    static class LinqExtensions
     {
         /// <summary>
         /// Used to group elements by a key function, but only where elements are adjacent
@@ -35,10 +36,8 @@ namespace Zxcvbn
                         yield return new AdjacentGrouping<TKey, TSource>(key, itemsList, prevStartIndex, i - 1);
 
                         prevKey = key;
-                        itemsList = new List<TSource>
-                        {
-                            item
-                        };
+                        itemsList = new List<TSource>();
+                        itemsList.Add(item);
                         prevStartIndex = i;
                     }
                     else
@@ -56,42 +55,23 @@ namespace Zxcvbn
                 i++;
             }
 
-            if (prevInit) yield return new AdjacentGrouping<TKey, TSource>(prevKey, itemsList, prevStartIndex, i - 1);
+            if (prevInit) yield return new AdjacentGrouping<TKey, TSource>(prevKey, itemsList, prevStartIndex, i - 1); ;
         }
 
-        /// <inheritdoc />
         /// <summary>
         /// A single grouping from the GroupAdjacent function, includes start and end indexes for the grouping in addition to standard IGrouping bits
         /// </summary>
         /// <typeparam name="TElement">Type of grouped elements</typeparam>
         /// <typeparam name="TKey">Type of key used for grouping</typeparam>
-        public class AdjacentGrouping<TKey, TElement> : IGrouping<TKey, TElement>
+        public class AdjacentGrouping<TKey, TElement> :  IGrouping<TKey, TElement>, IEnumerable<TElement>
         {
-            private readonly IEnumerable<TElement> _mGroupItems;
-
-            internal AdjacentGrouping(TKey key, IEnumerable<TElement> groupItems, int startIndex, int endIndex)
-            {
-                Key = key;
-                StartIndex = startIndex;
-                EndIndex = endIndex;
-                _mGroupItems = groupItems;
-            }
-
-            /// <summary>
-            /// The end index in the enumerable for this group (i.e. the index of the last element)
-            /// </summary>
-            public int EndIndex
-            {
-                get;
-            }
-
-            /// <inheritdoc />
             /// <summary>
             /// The key value for this grouping
             /// </summary>
             public TKey Key
             {
                 get;
+                private set;
             }
 
             /// <summary>
@@ -100,16 +80,38 @@ namespace Zxcvbn
             public int StartIndex
             {
                 get;
+                private set;
             }
+
+            /// <summary>
+            /// The end index in the enumerable for this group (i.e. the index of the last element)
+            /// </summary>
+            public int EndIndex
+            {
+                get;
+                private set;
+            }
+
+            private IEnumerable<TElement> m_groupItems;
+
+            internal AdjacentGrouping(TKey key, IEnumerable<TElement> groupItems, int startIndex, int endIndex)
+            {
+                this.Key = key;
+                this.StartIndex = startIndex;
+                this.EndIndex = endIndex;
+                m_groupItems = groupItems;
+            }
+
+            private AdjacentGrouping() { }
 
             IEnumerator<TElement> IEnumerable<TElement>.GetEnumerator()
             {
-                return _mGroupItems.GetEnumerator();
+                return m_groupItems.GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
             {
-                return _mGroupItems.GetEnumerator();
+                return m_groupItems.GetEnumerator();
             }
         }
     }
