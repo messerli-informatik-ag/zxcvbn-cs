@@ -463,7 +463,7 @@ namespace zxcvbn_test
             { "", "","" },
             { "Add another word or two. Uncommon words are better.", "Avoid repeated words and characters","" },
             { "Add another word or two. Uncommon words are better.", "Avoid sequences","" },
-            { "", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
             { "Add another word or two. Uncommon words are better.", "","" },
             { "Add another word or two. Uncommon words are better.", "","" },
             { "Add another word or two. Uncommon words are better.", "","" },
@@ -472,7 +472,7 @@ namespace zxcvbn_test
             { "Add another word or two. Uncommon words are better.", "","" },
             { "Add another word or two. Uncommon words are better.", "","" },
             { "Add another word or two. Uncommon words are better.", "Predictable substitutions like '@' instead of 'a' don't help very much","" },
-            { "", "","" },
+            { "Add another word or two. Uncommon words are better.", "","" },
             { "Add another word or two. Uncommon words are better.", "","" },//original library gives 3/4 score here while this library gives 0
             { "Add another word or two. Uncommon words are better.", "","" },//original library gives 3/4 score here while this library gives 0
             { "Add another word or two. Uncommon words are better.", "Use a longer keyboard pattern with more turns","" },//original library gives 3/4 score here while this library gives 2
