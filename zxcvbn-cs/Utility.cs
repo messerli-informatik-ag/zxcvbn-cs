@@ -200,35 +200,30 @@ namespace Zxcvbn
         /// <returns>An enumerable of lines of text in the resource or null if the resource does not exist</returns>
         public static IEnumerable<string> GetEmbeddedResourceLines(string resourceName)
         {
-            var asm = typeof(Utility).GetTypeInfo().Assembly;
-
+            var asm = Assembly.GetExecutingAssembly();
             if (!asm.GetManifestResourceNames().Contains(resourceName)) return null; // Not an embedded resource
 
             var lines = new List<string>();
 
             using (var stream = asm.GetManifestResourceStream(resourceName))
+            using (var text = new StreamReader(stream))
             {
-                using (DeflateStream decompressionStream = new DeflateStream(stream, CompressionMode.Decompress))
+                while (!text.EndOfStream)
                 {
-                    using (var text = new StreamReader(decompressionStream))
-                    {
-                        while (!text.EndOfStream)
-                        {
-                            lines.Add(text.ReadLine());
-                        }
-                    }
+                    lines.Add(text.ReadLine());
                 }
             }
+
             return lines;
         }
 
         /// <summary>
-        /// Get a translated string of the Warning
-        /// </summary>
-        /// <param name="warning">Warning enum to get the string from</param>
-        /// <param name="translation">Language in which to return the string to. Default is English.</param>
-        /// <returns>Warning string in the right language</returns>
-        public static string GetWarning(Warning warning, Translation translation = Translation.English)
+            /// Get a translated string of the Warning
+            /// </summary>
+            /// <param name="warning">Warning enum to get the string from</param>
+            /// <param name="translation">Language in which to return the string to. Default is English.</param>
+            /// <returns>Warning string in the right language</returns>
+            public static string GetWarning(Warning warning, Translation translation = Translation.English)
         {
             string translated;
 
