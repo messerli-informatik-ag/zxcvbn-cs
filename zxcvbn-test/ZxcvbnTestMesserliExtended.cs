@@ -9,37 +9,6 @@ namespace zxcvbn_test
     {
         private const string CategoryUnitTest = "UnitTest";
 
-        [Ignore]
-        [TestMethod]
-        public void CompressDictionaries()
-        {
-            // Running this test creates the compressed dictionaries for the zxcvbn resources
-            var basePath = Directory.GetCurrentDirectory();
-            var dictionaryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\..\\RMIProd\\Main\\ExternalLibraries\\zxcvbn\\Dictionaries\\Uncompressed"));
-
-            DirectoryInfo directorySelected = new DirectoryInfo(dictionaryPath);
-
-            foreach (FileInfo file in directorySelected.GetFiles("*.lst"))
-            {
-                using (FileStream originalFileStream = file.OpenRead())
-                {
-                    if ((File.GetAttributes(file.FullName) & FileAttributes.Hidden)
-                        != FileAttributes.Hidden & file.Extension != ".cmp")
-                    {
-                        var compressedFileName = Path.GetFullPath(Path.Combine(file.DirectoryName, "..", file.Name + ".cmp"));
-                        using (FileStream compressedFileStream = File.Create(compressedFileName))
-                        {
-                            using (DeflateStream compressionStream = new DeflateStream(compressedFileStream, CompressionLevel.Optimal))
-                            {
-                                originalFileStream.CopyTo(compressionStream);
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-
         [TestMethod]
         [TestCategory(CategoryUnitTest)]
         [Priority(1)]
