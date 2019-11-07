@@ -98,7 +98,8 @@ namespace Zxcvbn.Matcher
         private Dictionary<string, int> BuildRankedDictionary(string wordListFile)
         {
             // Look first to wordlists embedded in assembly (i.e. default dictionaries) otherwise treat as file path
-            var lines = Utility.GetEmbeddedResourceLines(wordListFile);
+
+            var lines = Utility.GetEmbeddedResourceLines(wordListFile) ?? File.ReadAllLines(wordListFile);
 
             return BuildRankedDictionary(lines);
         }
