@@ -30,4 +30,80 @@
     <EmbeddedResource Remove="Dictionaries\**" />
     <EmbeddedResource Remove="zxcvbn-test\**" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Dictionaries\deutsch.lst" />
+    <None Remove="Dictionaries\english.lst" />
+    <None Remove="Dictionaries\female_names.lst" />
+    <None Remove="Dictionaries\female_names_ch_de.lst" />
+    <None Remove="Dictionaries\female_names_ch_fr.lst" />
+    <None Remove="Dictionaries\female_names_ch_it.lst" />
+    <None Remove="Dictionaries\female_names_en.lst" />
+    <None Remove="Dictionaries\français.lst" />
+    <None Remove="Dictionaries\italiano.lst" />
+    <None Remove="Dictionaries\male_names.lst" />
+    <None Remove="Dictionaries\male_names_ch_de.lst" />
+    <None Remove="Dictionaries\male_names_ch_fr.lst" />
+    <None Remove="Dictionaries\male_names_ch_it.lst" />
+    <None Remove="Dictionaries\male_names_en.lst" />
+    <None Remove="Dictionaries\messerli.lst" />
+    <None Remove="Dictionaries\passwords.lst" />
+    <None Remove="Dictionaries\surnames.lst" />
+    <None Remove="Dictionaries\us_tv_and_film.lst" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dictionaries\deutsch.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\english.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_ch_de.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_ch_fr.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_ch_it.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_en.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\français.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\italiano.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_ch_de.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_ch_fr.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_ch_it.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_en.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\messerli.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\passwords.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\surnames.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\us_tv_and_film.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
