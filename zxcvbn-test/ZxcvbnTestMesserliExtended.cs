@@ -23,7 +23,7 @@ namespace zxcvbn_test
         [TestMethod]
         [TestCategory(CategoryUnitTest)]
         [Priority(1)]
-        public void ZxcvbnPasswordMetric()
+        public void EvaluatesPasswordEntropy()
         {
             var passwordChecker = new Zxcvbn.Zxcvbn();
 
