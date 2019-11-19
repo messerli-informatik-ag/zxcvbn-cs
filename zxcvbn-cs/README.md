@@ -96,7 +96,7 @@ The following changes differ from the [original library](https://github.com/mick
 - Add keyboard layouts: 
 	Swiss German, Swiss French, Italian, German, French
 		
-- Changed date matcher logics:
+- Change date matcher logic:
 	Considers the different date format by country
 	
 - Change dictionaries load
