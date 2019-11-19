@@ -68,7 +68,7 @@ namespace zxcvbn_test
         [Priority(1)]
         public void SwissSpatialMatcherTest()
         {
-            var swissKeyboardPatterns = new System.Collections.Generic.List<string> { "löäü'", "ö-.,m" };
+            var swissKeyboardPatterns = new List<string> { "löäü'", "ö-.,m" };
 
             var passwordChecker = new Zxcvbn.Zxcvbn();
 
