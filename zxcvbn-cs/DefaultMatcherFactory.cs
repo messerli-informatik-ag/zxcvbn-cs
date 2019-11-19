@@ -20,26 +20,12 @@ namespace Zxcvbn
     {
         List<IMatcher> matchers;
 
-        private IEnumerable<string> DictionaryResources()
-        {
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            string folderName = string.Format("{0}.Resources.Folder", executingAssembly.GetName().Name);
-            return executingAssembly.GetManifestResourceNames().Where(path => path.StartsWith("zxcvbn.Dictionaries"));
-
-        }
-
         /// <summary>
         /// Create a matcher factory that uses the default list of pattern matchers
         /// </summary>
         public DefaultMatcherFactory()
         {
-            var dictionaryMatchers = new List<DictionaryMatcher>();
-
-            foreach (var resource in DictionaryResources())
-            {
-                var name = resource.Split('.').Skip(2).First();
-                dictionaryMatchers.Add(new DictionaryMatcher(name, resource));
-            }
+            var dictionaryMatchers = LoadEmbeddedResourcesDictionaries();
 
             matchers = new List<IMatcher> {
                 new RepeatMatcher(),
@@ -65,6 +51,19 @@ namespace Zxcvbn
             var leetUser = new L33tMatcher(userInputDict);
 
             return matchers.Union(new List<IMatcher> { userInputDict, leetUser });
+        }
+
+        private static List<DictionaryMatcher> LoadEmbeddedResourcesDictionaries()
+        {
+            const string embeddedResourceNamespace = "zxcvbn.Dictionaries.";
+
+            return Assembly
+                .GetExecutingAssembly()
+                .GetManifestResourceNames()
+                .Where(path => path.StartsWith(embeddedResourceNamespace))
+                .Select(path => path.Remove(0, embeddedResourceNamespace.Length))
+                .Select(path => new DictionaryMatcher(path.Split('.').First(), path))
+                .ToList();
         }
     }
 }
