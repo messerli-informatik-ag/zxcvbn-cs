@@ -25,9 +25,9 @@
     <None Remove="test_dictionary.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="test_dictionary.txt">
+    <Content Include="test_dictionary.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
