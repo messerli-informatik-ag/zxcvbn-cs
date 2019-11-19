@@ -1,6 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using System.IO.Compression;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace zxcvbn_test
 {
@@ -106,7 +105,7 @@ namespace zxcvbn_test
         public void FrenchSpatialMatcherTest()
         {
             // We test if the pattern matcher matches swiss keyboards
-            var frenchKeyboardPatterns = new System.Collections.Generic.List<string> { "*ùmlkj", "bn,;:!" };
+            var frenchKeyboardPatterns = new List<string> { "*ùmlkj", "bn,;:!" };
 
             var passwordChecker = new Zxcvbn.Zxcvbn();
 
