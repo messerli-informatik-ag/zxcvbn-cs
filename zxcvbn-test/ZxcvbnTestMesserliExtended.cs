@@ -11,7 +11,7 @@ namespace zxcvbn_test
         [TestMethod]
         [TestCategory(CategoryUnitTest)]
         [Priority(1)]
-        public void ZxcvbnEmptyPasswordMetric()
+        public void EvaluatesEmptyPasswordWithAnEntropyOfZero()
         {
             var passwordChecker = new Zxcvbn.Zxcvbn();
 
