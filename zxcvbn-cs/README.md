@@ -98,3 +98,6 @@ The following changes differ from the [original library](https://github.com/mick
 		
 - Changed date matcher logics:
 	Considers the different date format by country
+	
+- Change dictionaries load
+	Loads all embedded resources from the directory "zxcvbn.Dictionaries"
