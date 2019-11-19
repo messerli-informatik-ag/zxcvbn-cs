@@ -42,20 +42,17 @@ namespace zxcvbn_test
         [Priority(1)]
         public void DictionaryMatcherTest()
         {
-            // We test if the dictionary matcher loads the messerli dictionary
             var passwordChecker = new Zxcvbn.Zxcvbn();
             var password = "Messerli";
             var metric = passwordChecker.EvaluatePassword(password);
 
             foreach (var match in metric.MatchSequence)
             {
-                // Match
                 Assert.AreEqual(10, match.Cardinality);
                 Assert.AreEqual(password, match.Token);
                 Assert.AreEqual(0, match.i);
                 Assert.AreEqual(password.Length - 1, match.j);
 
-                // Dictionary Match
                 var dictionaryMatch = match as Zxcvbn.Matcher.DictionaryMatch;
 
                 Assert.AreNotEqual(null, dictionaryMatch);
@@ -71,7 +68,6 @@ namespace zxcvbn_test
         [Priority(1)]
         public void SwissSpatialMatcherTest()
         {
-            // We test if the pattern matcher matches swiss keyboards
             var swissKeyboardPatterns = new System.Collections.Generic.List<string> { "löäü'", "ö-.,m" };
 
             var passwordChecker = new Zxcvbn.Zxcvbn();
@@ -82,7 +78,6 @@ namespace zxcvbn_test
 
                 foreach (var match in metric.MatchSequence)
                 {
-                    // Dictionary Match
                     var spatialMatch = match as Zxcvbn.Matcher.SpatialMatch;
 
                     Assert.AreNotEqual(null, spatialMatch);
@@ -90,7 +85,6 @@ namespace zxcvbn_test
                     Assert.AreEqual(0, spatialMatch.ShiftedCount);
                     Assert.AreEqual(2, spatialMatch.Turns);
 
-                    // Match
                     Assert.AreEqual(0, match.Cardinality);
                     Assert.AreEqual(0, match.i);
                     Assert.AreEqual(pattern.Length - 1, match.j);
@@ -104,7 +98,6 @@ namespace zxcvbn_test
         [Priority(1)]
         public void FrenchSpatialMatcherTest()
         {
-            // We test if the pattern matcher matches swiss keyboards
             var frenchKeyboardPatterns = new List<string> { "*ùmlkj", "bn,;:!" };
 
             var passwordChecker = new Zxcvbn.Zxcvbn();
@@ -115,7 +108,6 @@ namespace zxcvbn_test
 
                 foreach (var match in metric.MatchSequence)
                 {
-                    // Dictionary Match
                     var spatialMatch = match as Zxcvbn.Matcher.SpatialMatch;
 
                     Assert.AreNotEqual(null, spatialMatch);
@@ -123,7 +115,6 @@ namespace zxcvbn_test
                     Assert.AreEqual(0, spatialMatch.ShiftedCount);
                     Assert.AreEqual(1, spatialMatch.Turns);
 
-                    // Match
                     Assert.AreEqual(0, match.Cardinality);
                     Assert.AreEqual(0, match.i);
                     Assert.AreEqual(pattern.Length - 1, match.j);
