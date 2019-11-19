@@ -91,7 +91,7 @@ Since `Zxcvbn-cs` is a port of the original `Zxcvbn` the original copyright and 
 
 ### Changes differ from mickford/zxcvbn-cs
 
-The following changes differ from the orginal one (mickford/zxcvbn-cs - https://github.com/mickford/zxcvbn-cs)
+The following changes differ from the [original library](https://github.com/mickford/zxcvbn-cs).:
 
 - Add keyboard layouts: 
 	Swiss German, Swiss French, Italian, German, French
