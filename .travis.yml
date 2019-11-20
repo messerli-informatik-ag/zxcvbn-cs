@@ -14,4 +14,4 @@ install:
 script:
     - dotnet build -f netstandard2.1 zxcvbn-cs/zxcvbn-cs.csproj 
     - dotnet build -f netcoreapp3.0 zxcvbn-test/zxcvbn-test.csproj
-    - dotnet test 
+    - dotnet test -f netcoreapp3.0 
