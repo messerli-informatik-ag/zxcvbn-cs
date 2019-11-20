@@ -40,7 +40,7 @@ namespace zxcvbn_test
         [TestMethod]
         [TestCategory(CategoryUnitTest)]
         [Priority(1)]
-        public void LoadMesserliDictionary()
+        public void LoadsMesserliDictionary()
         {
             var passwordChecker = new Zxcvbn.Zxcvbn();
             var password = "Messerli";
