@@ -66,7 +66,7 @@ namespace zxcvbn_test
         [TestMethod]
         [TestCategory(CategoryUnitTest)]
         [Priority(1)]
-        public void SwissGermanKeyboardPatternMatch()
+        public void MatchesSwissGermanKeyboardPattern()
         {
             var swissKeyboardPatterns = new List<string> { "löäü'", "ö-.,m" };
 
@@ -96,7 +96,7 @@ namespace zxcvbn_test
         [TestMethod]
         [TestCategory(CategoryUnitTest)]
         [Priority(1)]
-        public void FrenchKeyboardPatternMatch()
+        public void MatchesFrenchKeyboardPattern()
         {
             var frenchKeyboardPatterns = new List<string> { "*ùmlkj", "bn,;:!" };
 
