@@ -12,5 +12,5 @@ install:
     - dotnet restore
 
 script:
-    - dotnet build
-    - dotnet test 
+    - dotnet build -r netcoreapp3.0
+    - dotnet test -r netcoreapp3.0
