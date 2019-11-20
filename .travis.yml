@@ -12,5 +12,5 @@ env:
         - dotnet restore
 
     script:
-        - dotnet build
-        - dotnet test
+        - dotnet build zxcvbn-cs.sln
+        - dotnet test zxcvbn-cs.sln
