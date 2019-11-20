@@ -11,7 +11,7 @@ namespace Zxcvbn
     /// <summary>
     /// <para>This matcher factory will use all of the default password matchers.</para>
     /// 
-    /// <para>Default dictionary matchers use the built-in word lists: passwords, english, male_names, female_names, surnames</para>
+    /// <para>Default dictionary matchers loads all embedded resources from the directory "zxcvbn.Dictionaries"</para>
     /// <para>Also matching against: user data, all dictionaries with l33t substitutions</para>
     /// <para>Other default matchers: repeats, sequences, digits, years, dates, spatial</para>
     /// 
