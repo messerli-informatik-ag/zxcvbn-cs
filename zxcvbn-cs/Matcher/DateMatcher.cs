@@ -14,8 +14,6 @@ namespace Zxcvbn.Matcher
     /// </summary>
     public class DateMatcher : IMatcher
     {
-        // TODO: This whole matcher is a rather messy but works (just), could do with a touching up. In particular it does not provide matched date details for dates without separators
-
         private const string DatePattern = "Date";
         private const int MaxYear = 2050;
         private const int MinYear = 1000;
