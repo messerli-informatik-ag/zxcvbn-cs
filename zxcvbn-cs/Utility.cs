@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.IO;
+using System.IO.Compression;
 
 namespace Zxcvbn
 {
@@ -217,12 +218,12 @@ namespace Zxcvbn
         }
 
         /// <summary>
-        /// Get a translated string of the Warning
-        /// </summary>
-        /// <param name="warning">Warning enum to get the string from</param>
-        /// <param name="translation">Language in which to return the string to. Default is English.</param>
-        /// <returns>Warning string in the right language</returns>
-        public static string GetWarning(Warning warning, Translation translation = Translation.English)
+            /// Get a translated string of the Warning
+            /// </summary>
+            /// <param name="warning">Warning enum to get the string from</param>
+            /// <param name="translation">Language in which to return the string to. Default is English.</param>
+            /// <returns>Warning string in the right language</returns>
+            public static string GetWarning(Warning warning, Translation translation = Translation.English)
         {
             string translated;
 

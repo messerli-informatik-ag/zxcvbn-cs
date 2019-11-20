@@ -1,0 +1,109 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{E80F559C-B5EB-4F14-9E3F-686A9C0237BF}</ProjectGuid>
+    <RootNamespace>zxcvbn</RootNamespace>
+    <AssemblyName>zxcvbn</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFrameworks>netstandard2.1;net46</TargetFrameworks>
+    <!-- TargetFrameworkProfile>Client</TargetFrameworkProfile -->
+    <AssemblyTitle>Zxcvbn</AssemblyTitle>
+    <Product>Zxcvbn</Product>
+    <Description>C#/.NET port of Dan Wheeler/DropBox's Zxcvbn JS password strength estimation library</Description>
+    <Copyright>Copyright 2016</Copyright>
+    <Version>1.0.0.0</Version>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+    <Authors>Michael Ford</Authors>
+    <PackageLicenseUrl>https://github.com/mickford/zxcvbn-cs/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/mickford/zxcvbn-cs</PackageProjectUrl>
+    <PackageTags>zxcvbn password</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Dictionaries\**" />
+    <Compile Remove="zxcvbn-test\**" />
+    <EmbeddedResource Remove="Dictionaries\**" />
+    <EmbeddedResource Remove="zxcvbn-test\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Dictionaries\deutsch.lst" />
+    <None Remove="Dictionaries\english.lst" />
+    <None Remove="Dictionaries\female_names.lst" />
+    <None Remove="Dictionaries\female_names_ch_de.lst" />
+    <None Remove="Dictionaries\female_names_ch_fr.lst" />
+    <None Remove="Dictionaries\female_names_ch_it.lst" />
+    <None Remove="Dictionaries\female_names_en.lst" />
+    <None Remove="Dictionaries\français.lst" />
+    <None Remove="Dictionaries\italiano.lst" />
+    <None Remove="Dictionaries\male_names.lst" />
+    <None Remove="Dictionaries\male_names_ch_de.lst" />
+    <None Remove="Dictionaries\male_names_ch_fr.lst" />
+    <None Remove="Dictionaries\male_names_ch_it.lst" />
+    <None Remove="Dictionaries\male_names_en.lst" />
+    <None Remove="Dictionaries\messerli.lst" />
+    <None Remove="Dictionaries\passwords.lst" />
+    <None Remove="Dictionaries\surnames.lst" />
+    <None Remove="Dictionaries\us_tv_and_film.lst" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dictionaries\deutsch.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\english.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_ch_de.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_ch_fr.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_ch_it.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\female_names_en.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\français.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\italiano.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_ch_de.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_ch_fr.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_ch_it.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\male_names_en.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\messerli.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\passwords.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\surnames.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dictionaries\us_tv_and_film.lst">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

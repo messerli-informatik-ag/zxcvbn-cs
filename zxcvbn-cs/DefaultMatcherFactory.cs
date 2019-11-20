@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Zxcvbn.Matcher;
 
@@ -9,7 +11,7 @@ namespace Zxcvbn
     /// <summary>
     /// <para>This matcher factory will use all of the default password matchers.</para>
     /// 
-    /// <para>Default dictionary matchers use the built-in word lists: passwords, english, male_names, female_names, surnames</para>
+    /// <para>Default dictionary matchers loads all embedded resources from the directory "zxcvbn.Dictionaries"</para>
     /// <para>Also matching against: user data, all dictionaries with l33t substitutions</para>
     /// <para>Other default matchers: repeats, sequences, digits, years, dates, spatial</para>
     /// 
@@ -17,6 +19,8 @@ namespace Zxcvbn
     /// </summary>
     class DefaultMatcherFactory : IMatcherFactory
     {
+        private const string EmbeddedResourceNamespace = "zxcvbn.Dictionaries.";
+
         List<IMatcher> matchers;
 
         /// <summary>
@@ -24,13 +28,7 @@ namespace Zxcvbn
         /// </summary>
         public DefaultMatcherFactory()
         {
-            var dictionaryMatchers = new List<DictionaryMatcher>() {
-                new DictionaryMatcher("passwords", "passwords.lst"),
-                new DictionaryMatcher("english", "english.lst"),
-                new DictionaryMatcher("male_names", "male_names.lst"),
-                new DictionaryMatcher("female_names", "female_names.lst"),
-                new DictionaryMatcher("surnames", "surnames.lst"),
-            };
+            var dictionaryMatchers = LoadEmbeddedResourcesDictionaries();
 
             matchers = new List<IMatcher> {
                 new RepeatMatcher(),
@@ -57,5 +55,20 @@ namespace Zxcvbn
 
             return matchers.Union(new List<IMatcher> { userInputDict, leetUser });
         }
+
+        private static List<DictionaryMatcher> LoadEmbeddedResourcesDictionaries()
+            => Assembly
+                .GetExecutingAssembly()
+                .GetManifestResourceNames()
+                .Where(path => path.StartsWith(EmbeddedResourceNamespace))
+                .Select(RemoveEmbeddedResourceNamespace)
+                .Select(CreateDictionaryMatcherFromPath)
+                .ToList();
+
+        private static DictionaryMatcher CreateDictionaryMatcherFromPath(string path)
+         => new DictionaryMatcher(Path.GetFileNameWithoutExtension(path), path);
+
+        private static string RemoveEmbeddedResourceNamespace(string path)
+            => path.Remove(0, EmbeddedResourceNamespace.Length);
     }
 }

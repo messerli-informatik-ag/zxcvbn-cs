@@ -174,7 +174,10 @@ namespace Zxcvbn
         /// <summary>
         /// Result constructor initialize Suggestion list.
         /// </summary>
-        public Result() { suggestions = new List<Suggestion>(); }
+        public Result()
+        {
+            suggestions = new List<Suggestion>();
+        }
 
         /// <summary>
         /// A calculated estimate of how many bits of entropy the password covers, rounded to three decimal places.
@@ -216,13 +219,12 @@ namespace Zxcvbn
         /// <summary>
         /// Warning on this password
         /// </summary>
-        public Warning  warning {get; set;}
+        public Warning warning { get; set; }
 
         /// <summary>
         /// Suggestion on how to improve the password
         /// </summary>
         public List<Suggestion> suggestions { get; set; }
-
 
     }
 

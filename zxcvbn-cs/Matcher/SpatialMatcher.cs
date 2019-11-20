@@ -26,7 +26,6 @@ namespace Zxcvbn.Matcher
         {
             return spatialGraphs.Value.SelectMany((g) => SpatialMatch(g, password)).ToList();
         }
-
         /// <summary>
         /// Match the password against a single pattern
         /// </summary>
@@ -85,7 +84,6 @@ namespace Zxcvbn.Matcher
             return matches;
         }
 
-
         // In the JS version these are precomputed, but for now we'll generate them here when they are first needed.
         private static List<SpatialGraph> GenerateSpatialGraphs()
         {
@@ -95,6 +93,41 @@ namespace Zxcvbn.Matcher
     qQ wW eE rR tT yY uU iI oO pP [{ ]} \|
      aA sS dD fF gG hH jJ kK lL ;: '""
       zZ xX cC vV bB nN mM ,< .> /?
+";
+
+            const string swissgerman = @"
+§° 1+ 2"" 3* 4ç 5% 6& 7/ 8( 9) 0= '? ^`
+    qQ wW eE rR tT zZ uU iI oO pP üè ¨!   
+     aA sS dD fF gG hH jJ kK lL öé äà $£
+   <> yY xX cC vV bB nN mM ,; .: -_
+";
+
+            const string swissfrench = @"
+§° 1+ 2"" 3* 4ç 5% 6& 7/ 8( 9) 0= '? ^`
+    qQ wW eE rR tT zZ uU iI oO pP èü ¨!   
+     aA sS dD fF gG hH jJ kK lL éö àä $£
+   <> yY xX cC vV bB nN mM ,; .: -_
+";
+
+            const string italian = @"
+\| 1! 2"" 3£ 4$ 5% 6& 7/ 8( 9) 0= '? ì^
+    qQ wW eE rR tT zZ uU iI oO pP èé +*   
+     aA sS dD fF gG hH jJ kK lL òç à° ù§
+   <> yY xX cC vV bB nN mM ,; .: -_
+";
+
+            const string german = @"
+^° 1! 2"" 3§ 4$ 5% 6& 7/ 8( 9) 0= ß? ´`
+    qQ wW eE rR tT zZ uU iI oO pP üÜ +*   
+     aA sS dD fF gG hH jJ kK lL öÖ äÄ #'
+   <> yY xX cC vV bB nN mM ,; .: -_
+";
+
+            const string french = @"
+²² &1 é2 ""3 '4 (5 -6 è7 _8 ç9 à0 )° =+
+    aA zZ eE rR tT yY uU iI oO pP ^¨ $£   
+     qQ sS dD fF gG hH jJ kK lL mM ù% *µ
+   <> wW xX cC vV bB nN ,? ;. :/ !§
 ";
 
             const string dvorak = @"
@@ -112,7 +145,7 @@ namespace Zxcvbn.Matcher
   0 .
 ";
 
-            const string mac_keypad = @"
+            const string macKeypad = @"
   = / *
 7 8 9 -
 4 5 6 +
@@ -120,13 +153,20 @@ namespace Zxcvbn.Matcher
   0 .
 ";
 
-
-            return new List<SpatialGraph> { new SpatialGraph("qwerty", qwerty, true),
-                    new SpatialGraph("dvorak", dvorak, true),
-                    new SpatialGraph("keypad", keypad, false),
-                    new SpatialGraph("mac_keypad", mac_keypad, false)
-                };
+            return new List<SpatialGraph> {
+                new SpatialGraph("US", qwerty, true),
+                new SpatialGraph("Dvorak", dvorak, true),
+                new SpatialGraph("Swiss German", swissgerman, true),
+                new SpatialGraph("Swiss French", swissfrench, false),
+                new SpatialGraph("German", german, false),
+                new SpatialGraph("Italian", italian, false),
+                new SpatialGraph("French", french, false),
+                new SpatialGraph("Keypad", keypad, false),
+                new SpatialGraph("Mac-Keypad", macKeypad, false)
+            };
         }
+
+
 
         // See build_keyboard_adjacency_graph.py in zxcvbn for how these are generated
         private class SpatialGraph
