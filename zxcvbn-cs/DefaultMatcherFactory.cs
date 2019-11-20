@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -18,6 +19,8 @@ namespace Zxcvbn
     /// </summary>
     class DefaultMatcherFactory : IMatcherFactory
     {
+        private const string EmbeddedResourceNamespace = "zxcvbn.Dictionaries.";
+
         List<IMatcher> matchers;
 
         /// <summary>
@@ -54,16 +57,18 @@ namespace Zxcvbn
         }
 
         private static List<DictionaryMatcher> LoadEmbeddedResourcesDictionaries()
-        {
-            const string embeddedResourceNamespace = "zxcvbn.Dictionaries.";
-
-            return Assembly
+            => Assembly
                 .GetExecutingAssembly()
                 .GetManifestResourceNames()
-                .Where(path => path.StartsWith(embeddedResourceNamespace))
-                .Select(path => path.Remove(0, embeddedResourceNamespace.Length))
-                .Select(path => new DictionaryMatcher(path.Split('.').First(), path))
+                .Where(path => path.StartsWith(EmbeddedResourceNamespace))
+                .Select(RemoveEmbeddedResourceNamespace)
+                .Select(CreateDictionaryMatcherFromPath)
                 .ToList();
-        }
+
+        private static DictionaryMatcher CreateDictionaryMatcherFromPath(string path)
+         => new DictionaryMatcher(Path.GetFileNameWithoutExtension(path), path);
+
+        private static string RemoveEmbeddedResourceNamespace(string path)
+            => path.Remove(0, EmbeddedResourceNamespace.Length);
     }
 }
