@@ -8,9 +8,9 @@ env:
         - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
         - DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-    install:
-        - dotnet restore
+install:
+    - dotnet restore
 
-    script:
-        - dotnet build zxcvbn-cs.sln
-        - dotnet test zxcvbn-cs.sln
+script:
+    - dotnet build
+    - dotnet test 
