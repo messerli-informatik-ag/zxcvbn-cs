@@ -19,7 +19,7 @@ namespace Zxcvbn
     /// Reusing the the Zxcvbn instance will ensure that pattern matchers will only be created once rather than being recreated for each password
     /// e=being evaluated.</para>
     /// </summary>
-    public class Zxcvbn
+    public class PasswordMetric
     {
         private const string BruteforcePattern = "bruteforce";
 
@@ -29,7 +29,7 @@ namespace Zxcvbn
         /// <summary>
         /// Create a new instance of Zxcvbn that uses the default matchers.
         /// </summary>
-        public Zxcvbn(Translation translation = Translation.English)
+        public PasswordMetric(Translation translation = Translation.English)
             : this(new DefaultMatcherFactory())
         {
             this.translation = translation;
@@ -41,7 +41,7 @@ namespace Zxcvbn
         /// </summary>
         /// <param name="matcherFactory">The factory used to create the pattern matchers used</param>
         /// <param name="translation">The language in which the strings are returned</param>
-        public Zxcvbn(IMatcherFactory matcherFactory, Translation translation = Translation.English)
+        public PasswordMetric(IMatcherFactory matcherFactory, Translation translation = Translation.English)
         {
             this.matcherFactory = matcherFactory;
             this.translation = translation;
@@ -348,7 +348,7 @@ namespace Zxcvbn
         /// <returns>The results of the password evaluation</returns>
         public static Result MatchPassword(string password, IEnumerable<string> userInputs = null)
         {
-            var zx = new Zxcvbn(new DefaultMatcherFactory());
+            var zx = new PasswordMetric(new DefaultMatcherFactory());
             return zx.EvaluatePassword(password, userInputs);
         }
 

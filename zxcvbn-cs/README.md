@@ -101,3 +101,5 @@ The following changes differ from the [original library](https://github.com/mick
 	
 - Change dictionaries load
 	Loads all embedded resources from the directory "zxcvbn.Dictionaries"
+
+- Rename class "Zxcvbn" to "PasswordMetric"

@@ -13,7 +13,7 @@ namespace zxcvbn_test
         [Priority(1)]
         public void EvaluatesEmptyPasswordWithAnEntropyOfZero()
         {
-            var passwordChecker = new Zxcvbn.Zxcvbn();
+            var passwordChecker = new Zxcvbn.PasswordMetric();
 
             var result = passwordChecker.EvaluatePassword("");
 
@@ -25,7 +25,7 @@ namespace zxcvbn_test
         [Priority(1)]
         public void EvaluatesPasswordEntropy()
         {
-            var passwordChecker = new Zxcvbn.Zxcvbn();
+            var passwordChecker = new Zxcvbn.PasswordMetric();
 
             var a = passwordChecker.EvaluatePassword("a");
             var aaaa = passwordChecker.EvaluatePassword("aaaa");
@@ -42,7 +42,7 @@ namespace zxcvbn_test
         [Priority(1)]
         public void LoadsMesserliDictionary()
         {
-            var passwordChecker = new Zxcvbn.Zxcvbn();
+            var passwordChecker = new Zxcvbn.PasswordMetric();
             var password = "Messerli";
             var metric = passwordChecker.EvaluatePassword(password);
 
@@ -70,7 +70,7 @@ namespace zxcvbn_test
         {
             var swissKeyboardPatterns = new List<string> { "löäü'", "ö-.,m" };
 
-            var passwordChecker = new Zxcvbn.Zxcvbn();
+            var passwordChecker = new Zxcvbn.PasswordMetric();
 
             foreach (var pattern in swissKeyboardPatterns)
             {
@@ -100,7 +100,7 @@ namespace zxcvbn_test
         {
             var frenchKeyboardPatterns = new List<string> { "*ùmlkj", "bn,;:!" };
 
-            var passwordChecker = new Zxcvbn.Zxcvbn();
+            var passwordChecker = new Zxcvbn.PasswordMetric();
 
             foreach (var pattern in frenchKeyboardPatterns)
             {

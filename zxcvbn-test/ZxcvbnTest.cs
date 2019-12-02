@@ -87,7 +87,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void RunAllTestPasswords()
         {
-            var zx = new Zxcvbn.Zxcvbn(new Zxcvbn.DefaultMatcherFactory());
+            var zx = new Zxcvbn.PasswordMetric(new Zxcvbn.DefaultMatcherFactory());
 
             for (int i = 0; i < testPasswords.Length; ++i)
             {
@@ -381,14 +381,14 @@ namespace zxcvbn_test
         [TestMethod]
         public void EmptyPassword()
         {
-            var res = Zxcvbn.Zxcvbn.MatchPassword("");
+            var res = Zxcvbn.PasswordMetric.MatchPassword("");
             Assert.AreEqual(0, res.Entropy);
         }
 
         [TestMethod]
         public void SinglePasswordTest()
         {
-            var res = Zxcvbn.Zxcvbn.MatchPassword("||ke");
+            var res = Zxcvbn.PasswordMetric.MatchPassword("||ke");
         }
 
         //Warning for the testPasswords array according to https://dl.dropboxusercontent.com/u/209/zxcvbn/test/index.html but adapted since this is an old version
@@ -432,7 +432,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void WarningTest()
         {
-            var zx = new Zxcvbn.Zxcvbn(new Zxcvbn.DefaultMatcherFactory());
+            var zx = new Zxcvbn.PasswordMetric(new Zxcvbn.DefaultMatcherFactory());
 
             for (int i = 0; i < testPasswords.Length; ++i)
             {
@@ -495,7 +495,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void SuggestionsTest()
         {
-            var zx = new Zxcvbn.Zxcvbn(new Zxcvbn.DefaultMatcherFactory());
+            var zx = new Zxcvbn.PasswordMetric(new Zxcvbn.DefaultMatcherFactory());
 
             for (int i = 0; i < testPasswords.Length; ++i)
             {
@@ -527,7 +527,7 @@ namespace zxcvbn_test
             //var res = Zxcvbn.Zxcvbn.MatchPassword("Password");
             // var res = Zxcvbn.Zxcvbn.MatchPassword("qwER43@!");
             //var res = Zxcvbn.Zxcvbn.MatchPassword("temppass22");
-            var res = Zxcvbn.Zxcvbn.MatchPassword("abcabc");
+            var res = Zxcvbn.PasswordMetric.MatchPassword("abcabc");
                         
         }
     }
