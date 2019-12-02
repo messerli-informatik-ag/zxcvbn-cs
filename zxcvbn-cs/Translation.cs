@@ -8,6 +8,6 @@
         English,
         German,
         France,
-        Italian
+        Italian,
     }
 }
