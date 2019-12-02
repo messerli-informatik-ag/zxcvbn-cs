@@ -103,3 +103,5 @@ The following changes differ from the [original library](https://github.com/mick
 	Loads all embedded resources from the directory "zxcvbn.Dictionaries"
 
 - Rename class "Zxcvbn" to "PasswordMetric"
+
+- Rename class "Result" to "PasswordMetricResult"

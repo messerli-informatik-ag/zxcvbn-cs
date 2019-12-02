@@ -169,12 +169,12 @@ namespace Zxcvbn
     /// <summary>
     /// The results of zxcvbn's password analysis
     /// </summary>
-    public class Result
+    public class PasswordMetricResult
     {
         /// <summary>
         /// Result constructor initialize Suggestion list.
         /// </summary>
-        public Result()
+        public PasswordMetricResult()
         {
             suggestions = new List<Suggestion>();
         }
