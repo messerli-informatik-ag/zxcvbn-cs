@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Zxcvbn;
+using Zxcvbn.Matcher;
 
 namespace zxcvbn_test
 {
@@ -87,7 +87,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void RunAllTestPasswords()
         {
-            var zx = new Zxcvbn.PasswordMetric(new Zxcvbn.DefaultMatcherFactory());
+            var zx = new PasswordMetric(new DefaultMatcherFactory());
 
             for (int i = 0; i < testPasswords.Length; ++i)
             {
@@ -112,47 +112,47 @@ namespace zxcvbn_test
                     O("Pattern:      {0}", match.Pattern);
                     O("Entropy:      {0}", match.Entropy);
 
-                    if (match is Zxcvbn.Matcher.DictionaryMatch)
+                    if (match is DictionaryMatch)
                     {
-                        var dm = match as Zxcvbn.Matcher.DictionaryMatch;
+                        var dm = match as DictionaryMatch;
                         O("Dict. Name:   {0}", dm.DictionaryName);
                         O("Rank:         {0}", dm.Rank);
                         O("Base Entropy: {0}", dm.BaseEntropy);
                         O("Upper Entpy:  {0}", dm.UppercaseEntropy);
                     }
 
-                    if (match is Zxcvbn.Matcher.L33tDictionaryMatch)
+                    if (match is L33tDictionaryMatch)
                     {
-                        var lm = match as Zxcvbn.Matcher.L33tDictionaryMatch;
+                        var lm = match as L33tDictionaryMatch;
                         O("L33t Entpy:   {0}", lm.L33tEntropy);
                         O("Unleet:       {0}", lm.MatchedWord);
                     }
 
-                    if (match is Zxcvbn.Matcher.SpatialMatch)
+                    if (match is SpatialMatch)
                     {
-                        var sm = match as Zxcvbn.Matcher.SpatialMatch;
+                        var sm = match as SpatialMatch;
                         O("Graph:        {0}", sm.Graph);
                         O("Turns:        {0}", sm.Turns);
                         O("Shifted Keys: {0}", sm.ShiftedCount);
                     }
 
-                    if (match is Zxcvbn.Matcher.RepeatMatch)
+                    if (match is RepeatMatch)
                     {
-                        var rm = match as Zxcvbn.Matcher.RepeatMatch;
+                        var rm = match as RepeatMatch;
                         O("Repeat char:  {0}", rm.RepeatChar);
                     }
 
-                    if (match is Zxcvbn.Matcher.SequenceMatch)
+                    if (match is SequenceMatch)
                     {
-                        var sm = match as Zxcvbn.Matcher.SequenceMatch;
+                        var sm = match as SequenceMatch;
                         O("Seq. name:    {0}", sm.SequenceName);
                         O("Seq. size:    {0}", sm.SequenceSize);
                         O("Ascending:    {0}", sm.Ascending);
                     }
 
-                    if (match is Zxcvbn.Matcher.DateMatch)
+                    if (match is DateMatch)
                     {
-                        var dm = match as Zxcvbn.Matcher.DateMatch;
+                        var dm = match as DateMatch;
                         O("Day:          {0}", dm.Day);
                         O("Month:        {0}", dm.Month);
                         O("Year:         {0}", dm.Year);
@@ -176,50 +176,50 @@ namespace zxcvbn_test
         [TestMethod]
         public void BruteForceCardinalityTest()
         {
-            Assert.AreEqual(26, Zxcvbn.PasswordScoring.PasswordCardinality("asdf"));
-            Assert.AreEqual(26, Zxcvbn.PasswordScoring.PasswordCardinality("ASDF"));
-            Assert.AreEqual(52, Zxcvbn.PasswordScoring.PasswordCardinality("aSDf"));
-            Assert.AreEqual(10, Zxcvbn.PasswordScoring.PasswordCardinality("124890"));
-            Assert.AreEqual(62, Zxcvbn.PasswordScoring.PasswordCardinality("aS159Df"));
-            Assert.AreEqual(33, Zxcvbn.PasswordScoring.PasswordCardinality("!@<%:{$:#<@}{+&)(*%"));
-            Assert.AreEqual(100, Zxcvbn.PasswordScoring.PasswordCardinality("©"));
-            Assert.AreEqual(95, Zxcvbn.PasswordScoring.PasswordCardinality("ThisIs@T3stP4ssw0rd!"));
+            Assert.AreEqual(26, PasswordScoring.PasswordCardinality("asdf"));
+            Assert.AreEqual(26, PasswordScoring.PasswordCardinality("ASDF"));
+            Assert.AreEqual(52, PasswordScoring.PasswordCardinality("aSDf"));
+            Assert.AreEqual(10, PasswordScoring.PasswordCardinality("124890"));
+            Assert.AreEqual(62, PasswordScoring.PasswordCardinality("aS159Df"));
+            Assert.AreEqual(33, PasswordScoring.PasswordCardinality("!@<%:{$:#<@}{+&)(*%"));
+            Assert.AreEqual(100,PasswordScoring.PasswordCardinality("©"));
+            Assert.AreEqual(95, PasswordScoring.PasswordCardinality("ThisIs@T3stP4ssw0rd!"));
         }
 
         [TestMethod]
         public void TimeDisplayStrings()
         {
             // Note that the time strings should be + 1
-            Assert.AreEqual("11 minutes", Zxcvbn.Utility.DisplayTime(60 * 10, Translation.English));
-            Assert.AreEqual("2 days", Zxcvbn.Utility.DisplayTime(60 * 60 * 24, Translation.English));
-            Assert.AreEqual("17 years", Zxcvbn.Utility.DisplayTime(60 * 60 * 24 * 365 * 15.4, Translation.English));
+            Assert.AreEqual("11 minutes", Utility.DisplayTime(60 * 10, Translation.English));
+            Assert.AreEqual("2 days", Utility.DisplayTime(60 * 60 * 24, Translation.English));
+            Assert.AreEqual("17 years", Utility.DisplayTime(60 * 60 * 24 * 365 * 15.4, Translation.English));
         }
 
         [TestMethod]
         public void TimeDisplayStringsGerman()
         {
             // Note that the time strings should be + 1
-            Assert.AreEqual("11 Minuten", Zxcvbn.Utility.DisplayTime(60 * 10, Translation.German));
-            Assert.AreEqual("2 Tage", Zxcvbn.Utility.DisplayTime(60 * 60 * 24, Translation.German));
-            Assert.AreEqual("17 Jahre", Zxcvbn.Utility.DisplayTime(60 * 60 * 24 * 365 * 15.4, Translation.German));
+            Assert.AreEqual("11 Minuten", Utility.DisplayTime(60 * 10, Translation.German));
+            Assert.AreEqual("2 Tage", Utility.DisplayTime(60 * 60 * 24, Translation.German));
+            Assert.AreEqual("17 Jahre", Utility.DisplayTime(60 * 60 * 24 * 365 * 15.4, Translation.German));
         }
 
         [TestMethod]
         public void RepeatMatcher()
         {
-            var repeat = new Zxcvbn.Matcher.RepeatMatcher();
+            var repeat = new RepeatMatcher();
 
             var res = repeat.MatchPassword("aaasdffff");
             Assert.AreEqual(2, res.Count());
 
             var m1 = res.ElementAt(0);
-            Assert.AreEqual(0, m1.i);
-            Assert.AreEqual(2, m1.j);
+            Assert.AreEqual(0, m1.Begin);
+            Assert.AreEqual(2, m1.End);
             Assert.AreEqual("aaa", m1.Token);
 
             var m2 = res.ElementAt(1);
-            Assert.AreEqual(5, m2.i);
-            Assert.AreEqual(8, m2.j);
+            Assert.AreEqual(5, m2.Begin);
+            Assert.AreEqual(8, m2.End);
             Assert.AreEqual("ffff", m2.Token);
 
 
@@ -230,26 +230,26 @@ namespace zxcvbn_test
         [TestMethod]
         public void SequenceMatcher()
         {
-            var seq = new Zxcvbn.Matcher.SequenceMatcher();
+            var seq = new SequenceMatcher();
 
             var res = seq.MatchPassword("abcd");
             Assert.AreEqual(1, res.Count());
             var m1 = res.First();
-            Assert.AreEqual(0, m1.i);
-            Assert.AreEqual(3, m1.j);
+            Assert.AreEqual(0, m1.Begin);
+            Assert.AreEqual(3, m1.End);
             Assert.AreEqual("abcd", m1.Token);
 
             res = seq.MatchPassword("asdfabcdhujzyxwhgjj");
             Assert.AreEqual(2, res.Count());
 
             m1 = res.ElementAt(0);
-            Assert.AreEqual(4, m1.i);
-            Assert.AreEqual(7, m1.j);
+            Assert.AreEqual(4, m1.Begin);
+            Assert.AreEqual(7, m1.End);
             Assert.AreEqual("abcd", m1.Token);
 
             var m2 = res.ElementAt(1);
-            Assert.AreEqual(11, m2.i);
-            Assert.AreEqual(14, m2.j);
+            Assert.AreEqual(11, m2.Begin);
+            Assert.AreEqual(14, m2.End);
             Assert.AreEqual("zyxw", m2.Token);
 
             res = seq.MatchPassword("dfsjkhfjksdh");
@@ -259,13 +259,13 @@ namespace zxcvbn_test
         [TestMethod]
         public void DigitsRegexMatcher()
         {
-            var re = new Zxcvbn.Matcher.RegexMatcher("\\d{3,}", 10);
+            var re = new RegexMatcher("\\d{3,}", 10);
 
             var res = re.MatchPassword("abc123def");
             Assert.AreEqual(1, res.Count());
             var m1 = res.First();
-            Assert.AreEqual(3, m1.i);
-            Assert.AreEqual(5, m1.j);
+            Assert.AreEqual(3, m1.Begin);
+            Assert.AreEqual(5, m1.End);
             Assert.AreEqual("123", m1.Token);
 
             res = re.MatchPassword("123456789a12345b1234567");
@@ -283,7 +283,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void DateMatcher()
         {
-            var dm = new Zxcvbn.Matcher.DateMatcher();
+            var dm = new DateMatcher();
 
             var res = dm.MatchPassword("1297");
             Assert.AreEqual(1, res.Count());
@@ -319,14 +319,14 @@ namespace zxcvbn_test
         [TestMethod]
         public void SpatialMatcher()
         {
-            var sm = new Zxcvbn.Matcher.SpatialMatcher();
+            var sm = new SpatialMatcher();
 
             var res = sm.MatchPassword("qwert");
             Assert.AreEqual(6, res.Count());
             var m1 = res.First();
             Assert.AreEqual("qwert", m1.Token);
-            Assert.AreEqual(0, m1.i);
-            Assert.AreEqual(4, m1.j);
+            Assert.AreEqual(0, m1.Begin);
+            Assert.AreEqual(4, m1.End);
 
             res = sm.MatchPassword("plko14569852pyfdb");
             Assert.AreEqual(16, res.Count()); // Multiple matches from different keyboard types
@@ -335,18 +335,18 @@ namespace zxcvbn_test
         [TestMethod]
         public void BinomialTest()
         {
-            Assert.AreEqual(1, Zxcvbn.PasswordScoring.Binomial(0, 0));
-            Assert.AreEqual(1, Zxcvbn.PasswordScoring.Binomial(1, 0));
-            Assert.AreEqual(0, Zxcvbn.PasswordScoring.Binomial(0, 1));
-            Assert.AreEqual(1, Zxcvbn.PasswordScoring.Binomial(1, 1));
-            Assert.AreEqual(56, Zxcvbn.PasswordScoring.Binomial(8, 3));
-            Assert.AreEqual(2598960, Zxcvbn.PasswordScoring.Binomial(52, 5));
+            Assert.AreEqual(1, PasswordScoring.Binomial(0, 0));
+            Assert.AreEqual(1, PasswordScoring.Binomial(1, 0));
+            Assert.AreEqual(0, PasswordScoring.Binomial(0, 1));
+            Assert.AreEqual(1, PasswordScoring.Binomial(1, 1));
+            Assert.AreEqual(56, PasswordScoring.Binomial(8, 3));
+            Assert.AreEqual(2598960, PasswordScoring.Binomial(52, 5));
         }
 
         [TestMethod]
         public void DictionaryTest()
         {
-            var dm = new Zxcvbn.Matcher.DictionaryMatcher("test", "test_dictionary.txt");
+            var dm = new DictionaryMatcher("test", "test_dictionary.txt");
 
             var res = dm.MatchPassword("NotInDictionary");
             Assert.AreEqual(0, res.Count());
@@ -358,7 +358,7 @@ namespace zxcvbn_test
             Assert.AreEqual(1, res.Count());
 
 
-            var leet = new Zxcvbn.Matcher.L33tMatcher(dm);
+            var leet = new L33tMatcher(dm);
             res = leet.MatchPassword("3mu");
             Assert.AreEqual(1, res.Count());
 
@@ -368,7 +368,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void L33tTest()
         {
-            var l = new Zxcvbn.Matcher.L33tMatcher(new Zxcvbn.Matcher.DictionaryMatcher("test", new List<string> {"password"}));
+            var l = new L33tMatcher(new DictionaryMatcher("test", new List<string> {"password"}));
 
             l.MatchPassword("password");
             l.MatchPassword("p@ssword");
@@ -381,14 +381,14 @@ namespace zxcvbn_test
         [TestMethod]
         public void EmptyPassword()
         {
-            var res = Zxcvbn.PasswordMetric.MatchPassword("");
+            var res = PasswordMetric.MatchPassword("");
             Assert.AreEqual(0, res.Entropy);
         }
 
         [TestMethod]
         public void SinglePasswordTest()
         {
-            var res = Zxcvbn.PasswordMetric.MatchPassword("||ke");
+            var res = PasswordMetric.MatchPassword("||ke");
         }
 
         //Warning for the testPasswords array according to https://dl.dropboxusercontent.com/u/209/zxcvbn/test/index.html but adapted since this is an old version
@@ -432,7 +432,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void WarningTest()
         {
-            var zx = new Zxcvbn.PasswordMetric(new Zxcvbn.DefaultMatcherFactory());
+            var zx = new PasswordMetric(new DefaultMatcherFactory());
 
             for (int i = 0; i < testPasswords.Length; ++i)
             {
@@ -495,7 +495,7 @@ namespace zxcvbn_test
         [TestMethod]
         public void SuggestionsTest()
         {
-            var zx = new Zxcvbn.PasswordMetric(new Zxcvbn.DefaultMatcherFactory());
+            var zx = new PasswordMetric(new DefaultMatcherFactory());
 
             for (int i = 0; i < testPasswords.Length; ++i)
             {
@@ -527,7 +527,7 @@ namespace zxcvbn_test
             //var res = Zxcvbn.Zxcvbn.MatchPassword("Password");
             // var res = Zxcvbn.Zxcvbn.MatchPassword("qwER43@!");
             //var res = Zxcvbn.Zxcvbn.MatchPassword("temppass22");
-            var res = Zxcvbn.PasswordMetric.MatchPassword("abcabc");
+            var res = PasswordMetric.MatchPassword("abcabc");
                         
         }
     }

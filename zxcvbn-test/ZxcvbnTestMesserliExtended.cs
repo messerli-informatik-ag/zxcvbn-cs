@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Zxcvbn;
+using Zxcvbn.Matcher;
 
 namespace zxcvbn_test
 {
     [TestClass]
-    public class ZxcvbnTest_MesserliExtended
+    public class ZxcvbnTestMesserliExtended
     {
         private const string CategoryUnitTest = "UnitTest";
 
@@ -13,7 +15,7 @@ namespace zxcvbn_test
         [Priority(1)]
         public void EvaluatesEmptyPasswordWithAnEntropyOfZero()
         {
-            var passwordChecker = new Zxcvbn.PasswordMetric();
+            var passwordChecker = new PasswordMetric();
 
             var result = passwordChecker.EvaluatePassword("");
 
@@ -25,7 +27,7 @@ namespace zxcvbn_test
         [Priority(1)]
         public void EvaluatesPasswordEntropy()
         {
-            var passwordChecker = new Zxcvbn.PasswordMetric();
+            var passwordChecker = new PasswordMetric();
 
             var a = passwordChecker.EvaluatePassword("a");
             var aaaa = passwordChecker.EvaluatePassword("aaaa");
@@ -42,7 +44,7 @@ namespace zxcvbn_test
         [Priority(1)]
         public void LoadsMesserliDictionary()
         {
-            var passwordChecker = new Zxcvbn.PasswordMetric();
+            var passwordChecker = new PasswordMetric();
             var password = "Messerli";
             var metric = passwordChecker.EvaluatePassword(password);
 
@@ -50,10 +52,10 @@ namespace zxcvbn_test
             {
                 Assert.AreEqual(10, match.Cardinality);
                 Assert.AreEqual(password, match.Token);
-                Assert.AreEqual(0, match.i);
-                Assert.AreEqual(password.Length - 1, match.j);
+                Assert.AreEqual(0, match.Begin);
+                Assert.AreEqual(password.Length - 1, match.End);
 
-                var dictionaryMatch = match as Zxcvbn.Matcher.DictionaryMatch;
+                var dictionaryMatch = match as DictionaryMatch;
 
                 Assert.AreNotEqual(null, dictionaryMatch);
                 Assert.AreEqual("messerli", dictionaryMatch.DictionaryName);
@@ -70,7 +72,7 @@ namespace zxcvbn_test
         {
             var swissKeyboardPatterns = new List<string> { "löäü'", "ö-.,m" };
 
-            var passwordChecker = new Zxcvbn.PasswordMetric();
+            var passwordChecker = new PasswordMetric();
 
             foreach (var pattern in swissKeyboardPatterns)
             {
@@ -78,7 +80,7 @@ namespace zxcvbn_test
 
                 foreach (var match in metric.MatchSequence)
                 {
-                    var spatialMatch = match as Zxcvbn.Matcher.SpatialMatch;
+                    var spatialMatch = match as SpatialMatch;
 
                     Assert.AreNotEqual(null, spatialMatch);
                     Assert.AreEqual("Swiss German", spatialMatch.Graph);
@@ -86,8 +88,8 @@ namespace zxcvbn_test
                     Assert.AreEqual(2, spatialMatch.Turns);
 
                     Assert.AreEqual(0, match.Cardinality);
-                    Assert.AreEqual(0, match.i);
-                    Assert.AreEqual(pattern.Length - 1, match.j);
+                    Assert.AreEqual(0, match.Begin);
+                    Assert.AreEqual(pattern.Length - 1, match.End);
                     Assert.AreEqual(pattern, match.Token);
                 }
             }
@@ -100,7 +102,7 @@ namespace zxcvbn_test
         {
             var frenchKeyboardPatterns = new List<string> { "*ùmlkj", "bn,;:!" };
 
-            var passwordChecker = new Zxcvbn.PasswordMetric();
+            var passwordChecker = new PasswordMetric();
 
             foreach (var pattern in frenchKeyboardPatterns)
             {
@@ -108,7 +110,7 @@ namespace zxcvbn_test
 
                 foreach (var match in metric.MatchSequence)
                 {
-                    var spatialMatch = match as Zxcvbn.Matcher.SpatialMatch;
+                    var spatialMatch = match as SpatialMatch;
 
                     Assert.AreNotEqual(null, spatialMatch);
                     Assert.AreEqual("French", spatialMatch.Graph);
@@ -116,8 +118,8 @@ namespace zxcvbn_test
                     Assert.AreEqual(1, spatialMatch.Turns);
 
                     Assert.AreEqual(0, match.Cardinality);
-                    Assert.AreEqual(0, match.i);
-                    Assert.AreEqual(pattern.Length - 1, match.j);
+                    Assert.AreEqual(0, match.Begin);
+                    Assert.AreEqual(pattern.Length - 1, match.End);
                     Assert.AreEqual(pattern, match.Token);
                 }
             }
