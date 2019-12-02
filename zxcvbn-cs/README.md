@@ -109,3 +109,6 @@ The following changes differ from the [original library](https://github.com/mick
 - Rename translation value "France" to "French"
 
 - Add translation value "Italian"
+
+- Remove not needed namespaces
+
