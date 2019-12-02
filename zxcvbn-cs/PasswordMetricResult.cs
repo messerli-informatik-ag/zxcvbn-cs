@@ -266,12 +266,12 @@ namespace Zxcvbn
         /// <summary>
         /// The start index in the password string of the matched token. 
         /// </summary>
-        public int i { get; set; } // Start Index
+        public int Begin { get; set; } // Start Index
 
         /// <summary>
         /// The end index in the password string of the matched token.
         /// </summary>
-        public int j { get; set; } // End Index
+        public int End { get; set; } // End Index
     }
 
 }

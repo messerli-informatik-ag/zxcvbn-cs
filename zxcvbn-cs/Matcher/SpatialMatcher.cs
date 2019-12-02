@@ -68,8 +68,8 @@ namespace Zxcvbn.Matcher
                     matches.Add(new SpatialMatch()
                     {
                         Pattern = SpatialPattern,
-                        i = i,
-                        j = j - 1,
+                        Begin = i,
+                        End = j - 1,
                         Token = password.Substring(i, j - i),
                         Graph = graph.Name,
                         Entropy = graph.CalculateEntropy(j - i, turns, shiftedCount),

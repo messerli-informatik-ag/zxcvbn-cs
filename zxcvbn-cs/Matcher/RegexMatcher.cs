@@ -64,8 +64,8 @@ namespace Zxcvbn.Matcher
                 pwMatches.Add(new Match()
                 {
                     Pattern = matcherName,
-                    i = rem.Index,
-                    j = rem.Index + rem.Length - 1,
+                    Begin = rem.Index,
+                    End = rem.Index + rem.Length - 1,
                     Token = password.Substring(rem.Index, rem.Length),
                     Cardinality = cardinality,
                     Entropy = Math.Log((perCharCardinality ? Math.Pow(cardinality, rem.Length) : cardinality), 2) // Raise cardinality to length when giver per character
