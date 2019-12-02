@@ -7,7 +7,7 @@
     {
         English,
         German,
-        France,
+        French,
         Italian,
     }
 }
