@@ -47,7 +47,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "unmittelbar";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "instantané";
                             break;
                         default:
@@ -61,7 +61,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "Minuten";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "Minutes";
                             break;
                         default:
@@ -75,7 +75,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "Stunden";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "Heures";
                             break;
                         default:
@@ -89,7 +89,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "Tage";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "Journées";
                             break;
                         default:
@@ -103,7 +103,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "Monate";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "Mois";
                             break;
                         default:
@@ -117,7 +117,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "Jahre";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "Ans";
                             break;
                         default:
@@ -131,7 +131,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "Jahrhunderte";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "Siècles";
                             break;
                         default:
@@ -235,7 +235,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -250,7 +250,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -265,7 +265,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -280,7 +280,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -294,7 +294,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -308,7 +308,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -322,7 +322,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -336,7 +336,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -350,7 +350,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -364,7 +364,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -378,7 +378,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -392,7 +392,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -406,7 +406,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -420,7 +420,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -435,7 +435,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -469,7 +469,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -484,7 +484,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -499,7 +499,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -514,7 +514,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -528,7 +528,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -542,7 +542,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -556,7 +556,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -570,7 +570,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -584,7 +584,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -598,7 +598,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
@@ -613,7 +613,7 @@ namespace Zxcvbn
                         case Translation.German:
                             translated = "";
                             break;
-                        case Translation.France:
+                        case Translation.French:
                             translated = "";
                             break;
                         default:
