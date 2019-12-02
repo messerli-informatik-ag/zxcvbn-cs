@@ -105,3 +105,7 @@ The following changes differ from the [original library](https://github.com/mick
 - Rename class "Zxcvbn" to "PasswordMetric"
 
 - Rename class "Result" to "PasswordMetricResult"
+
+- Rename translation value "France" to "French"
+
+- Add translation value "Italian"
