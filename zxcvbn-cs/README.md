@@ -100,16 +100,16 @@ The following changes differ from the [original library](https://github.com/mick
 	Considers the different date format by country
 	
 - Change dictionaries load
-	Loads all embedded resources from the directory "zxcvbn.Dictionaries"
+	Loads all embedded resources from the directory `zxcvbn.Dictionaries`
 
-- Rename class "Zxcvbn" to "PasswordMetric"
+- Rename class `Zxcvbn` to `PasswordMetric`
 
-- Rename class "Result" to "PasswordMetricResult"
+- Rename class `Result` to `PasswordMetricResult`
 
-- Rename translation value "France" to "French"
+- Rename translation value `France` to `French`
 
-- Add translation value "Italian"
+- Add translation value `Italian`
 
-- Rename start index in the password string of the matched token "i" to "Begin"
+- Rename start index in the password string of the matched token `i` to `Begin`
 
-- Rename end index in the password string of the matched token "j" to "End"
+- Rename end index in the password string of the matched token `j` to `End`
