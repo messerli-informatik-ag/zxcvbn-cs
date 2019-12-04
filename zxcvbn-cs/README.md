@@ -110,8 +110,6 @@ The following changes differ from the [original library](https://github.com/mick
 
 - Add translation value "Italian"
 
-- Remove not needed namespaces
-
 - Rename start index in the password string of the matched token "i" to "Begin"
 
 - Rename end index in the password string of the matched token "j" to "End"
