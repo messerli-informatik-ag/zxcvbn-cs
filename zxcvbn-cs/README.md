@@ -101,3 +101,15 @@ The following changes differ from the [original library](https://github.com/mick
 	
 - Change dictionaries load
 	Loads all embedded resources from the directory "zxcvbn.Dictionaries"
+
+- Rename class "Zxcvbn" to "PasswordMetric"
+
+- Rename class "Result" to "PasswordMetricResult"
+
+- Rename translation value "France" to "French"
+
+- Add translation value "Italian"
+
+- Rename start index in the password string of the matched token "i" to "Begin"
+
+- Rename end index in the password string of the matched token "j" to "End"

@@ -46,7 +46,7 @@ namespace Zxcvbn.Matcher
                           let sub_password = TranslateString(subDict, password)
                           from matcher in dictionaryMatchers
                           from match in matcher.MatchPassword(sub_password).OfType<DictionaryMatch>()
-                          let token = password.Substring(match.i, match.j - match.i + 1)
+                          let token = password.Substring(match.Begin, match.End - match.Begin + 1)
                           let usedSubs = subDict.Where(kv => token.Contains(kv.Key)) // Count subs ised in matched token
                           where usedSubs.Count() > 0 // Only want matches where substitutions were used
                           select new L33tDictionaryMatch(match)
@@ -194,8 +194,8 @@ namespace Zxcvbn.Matcher
             this.Cardinality = dm.Cardinality;
             this.DictionaryName = dm.DictionaryName;
             this.Entropy = dm.Entropy;
-            this.i = dm.i;
-            this.j = dm.j;
+            this.Begin = dm.Begin;
+            this.End = dm.End;
             this.MatchedWord = dm.MatchedWord;
             this.Pattern = dm.Pattern;
             this.Rank = dm.Rank;

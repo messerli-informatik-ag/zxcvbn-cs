@@ -26,8 +26,8 @@ namespace Zxcvbn.Matcher
             return password.GroupAdjacent(c => c).Where(g => g.Count() > 2).Select(g => new RepeatMatch {
                 Pattern = RepeatPattern,
                 Token = password.Substring(g.StartIndex, g.EndIndex - g.StartIndex + 1),
-                i = g.StartIndex,
-                j = g.EndIndex,
+                Begin = g.StartIndex,
+                End = g.EndIndex,
                 Entropy = CalculateEntropy(password.Substring(g.StartIndex, g.EndIndex - g.StartIndex + 1)),
                 RepeatChar = g.Key
             });

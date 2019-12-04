@@ -19,7 +19,7 @@ namespace Zxcvbn
     /// Reusing the the Zxcvbn instance will ensure that pattern matchers will only be created once rather than being recreated for each password
     /// e=being evaluated.</para>
     /// </summary>
-    public class Zxcvbn
+    public class PasswordMetric
     {
         private const string BruteforcePattern = "bruteforce";
 
@@ -29,7 +29,7 @@ namespace Zxcvbn
         /// <summary>
         /// Create a new instance of Zxcvbn that uses the default matchers.
         /// </summary>
-        public Zxcvbn(Translation translation = Translation.English)
+        public PasswordMetric(Translation translation = Translation.English)
             : this(new DefaultMatcherFactory())
         {
             this.translation = translation;
@@ -41,7 +41,7 @@ namespace Zxcvbn
         /// </summary>
         /// <param name="matcherFactory">The factory used to create the pattern matchers used</param>
         /// <param name="translation">The language in which the strings are returned</param>
-        public Zxcvbn(IMatcherFactory matcherFactory, Translation translation = Translation.English)
+        public PasswordMetric(IMatcherFactory matcherFactory, Translation translation = Translation.English)
         {
             this.matcherFactory = matcherFactory;
             this.translation = translation;
@@ -56,7 +56,7 @@ namespace Zxcvbn
         /// <param name="password">Password</param>
         /// <param name="userInputs">Optionally, an enumarable of user data</param>
         /// <returns>Result for lowest entropy match</returns>
-        public Result EvaluatePassword(string password, IEnumerable<string> userInputs = null)
+        public PasswordMetricResult EvaluatePassword(string password, IEnumerable<string> userInputs = null)
         {
             userInputs = userInputs ?? new string[0];
 
@@ -84,7 +84,7 @@ namespace Zxcvbn
         /// <param name="matches">Password being evaluated</param>
         /// <param name="password">List of matches found against the password</param>
         /// <returns>A result object for the lowest entropy match sequence</returns>
-        private Result FindMinimumEntropyMatch(string password, IEnumerable<Match> matches)
+        private PasswordMetricResult FindMinimumEntropyMatch(string password, IEnumerable<Match> matches)
         {
             var bruteforce_cardinality = PasswordScoring.PasswordCardinality(password);
 
@@ -98,9 +98,9 @@ namespace Zxcvbn
                 minimumEntropyToIndex[k] = (k == 0 ? 0 : minimumEntropyToIndex[k - 1]) + Math.Log(bruteforce_cardinality, 2);
 
                 // All matches that end at the current character, test to see if the entropy is less
-                foreach (var match in matches.Where(m => m.j == k))
+                foreach (var match in matches.Where(m => m.End == k))
                 {
-                    var candidate_entropy = (match.i <= 0 ? 0 : minimumEntropyToIndex[match.i - 1]) + match.Entropy;
+                    var candidate_entropy = (match.Begin <= 0 ? 0 : minimumEntropyToIndex[match.Begin - 1]) + match.Entropy;
                     if (candidate_entropy < minimumEntropyToIndex[k])
                     {
                         minimumEntropyToIndex[k] = candidate_entropy;
@@ -117,7 +117,7 @@ namespace Zxcvbn
                 if (bestMatchForIndex[k] != null)
                 {
                     matchSequence.Add(bestMatchForIndex[k]);
-                    k = bestMatchForIndex[k].i; // Jump back to start of match
+                    k = bestMatchForIndex[k].Begin; // Jump back to start of match
                 }
             }
             matchSequence.Reverse();
@@ -130,8 +130,8 @@ namespace Zxcvbn
                 // To make things easy, we'll separate out the case where there are no matches so everything is bruteforced
                 matchSequence.Add(new Match()
                 {
-                    i = 0,
-                    j = password.Length,
+                    Begin = 0,
+                    End = password.Length,
                     Token = password,
                     Cardinality = bruteforce_cardinality,
                     Pattern = BruteforcePattern,
@@ -145,18 +145,18 @@ namespace Zxcvbn
                 for (var k = 0; k < matchSequence.Count; k++)
                 {
                     var m1 = matchSequence[k];
-                    var m2 = (k < matchSequence.Count - 1 ? matchSequence[k + 1] : new Match() { i = password.Length }); // Next match, or a match past the end of the password
+                    var m2 = (k < matchSequence.Count - 1 ? matchSequence[k + 1] : new Match() { Begin = password.Length }); // Next match, or a match past the end of the password
 
                     matchSequenceCopy.Add(m1);
-                    if (m1.j < m2.i - 1)
+                    if (m1.End < m2.Begin - 1)
                     {
                         // Fill in gap
-                        var ns = m1.j + 1;
-                        var ne = m2.i - 1;
+                        var ns = m1.End + 1;
+                        var ne = m2.Begin - 1;
                         matchSequenceCopy.Add(new Match()
                         {
-                            i = ns,
-                            j = ne,
+                            Begin = ns,
+                            End = ne,
                             Token = password.Substring(ns, ne - ns + 1),
                             Cardinality = bruteforce_cardinality,
                             Pattern = BruteforcePattern,
@@ -172,7 +172,7 @@ namespace Zxcvbn
             var minEntropy = (password.Length == 0 ? 0 : minimumEntropyToIndex[password.Length - 1]);
             var crackTime = PasswordScoring.EntropyToCrackTime(minEntropy);
 
-            var result = new Result();
+            var result = new PasswordMetricResult();
             result.Password = password;
             result.Entropy = Math.Round(minEntropy, 3);
             result.MatchSequence = matchSequence;
@@ -229,7 +229,7 @@ namespace Zxcvbn
             return longestMatch;
         }
 
-        private void GetMatchFeedback(Match match, bool isSoleMatch, Result result)
+        private void GetMatchFeedback(Match match, bool isSoleMatch, PasswordMetricResult result)
         {
             switch (match.Pattern)
             {
@@ -251,10 +251,10 @@ namespace Zxcvbn
 
                 case "repeat":
                     //todo: add support for repeated sequences longer than 1 char
-                  //  if(match.Token.Length == 1)
-                        result.warning = Warning.RepeatsLikeAaaEasy;
-                  //  else
-                 //       result.warning = Warning.RepeatsLikeAbcSlighterHarder;
+                    //  if(match.Token.Length == 1)
+                    result.warning = Warning.RepeatsLikeAaaEasy;
+                    //  else
+                    //       result.warning = Warning.RepeatsLikeAbcSlighterHarder;
 
                     result.suggestions.Clear();
                     result.suggestions.Add(Suggestion.AvoidRepeatedWordsAndChars);
@@ -279,7 +279,7 @@ namespace Zxcvbn
             }
         }
 
-        private void GetDictionaryMatchFeedback(DictionaryMatch match, bool isSoleMatch, Result result)
+        private void GetDictionaryMatchFeedback(DictionaryMatch match, bool isSoleMatch, PasswordMetricResult result)
         {
             if (match.DictionaryName.Equals("passwords"))
             {
@@ -346,9 +346,9 @@ namespace Zxcvbn
         /// <param name="password">the password to test</param>
         /// <param name="userInputs">optionally, the user inputs list</param>
         /// <returns>The results of the password evaluation</returns>
-        public static Result MatchPassword(string password, IEnumerable<string> userInputs = null)
+        public static PasswordMetricResult MatchPassword(string password, IEnumerable<string> userInputs = null)
         {
-            var zx = new Zxcvbn(new DefaultMatcherFactory());
+            var zx = new PasswordMetric(new DefaultMatcherFactory());
             return zx.EvaluatePassword(password, userInputs);
         }
 

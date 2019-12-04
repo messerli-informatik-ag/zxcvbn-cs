@@ -169,12 +169,12 @@ namespace Zxcvbn
     /// <summary>
     /// The results of zxcvbn's password analysis
     /// </summary>
-    public class Result
+    public class PasswordMetricResult
     {
         /// <summary>
         /// Result constructor initialize Suggestion list.
         /// </summary>
-        public Result()
+        public PasswordMetricResult()
         {
             suggestions = new List<Suggestion>();
         }
@@ -266,12 +266,12 @@ namespace Zxcvbn
         /// <summary>
         /// The start index in the password string of the matched token. 
         /// </summary>
-        public int i { get; set; } // Start Index
+        public int Begin { get; set; } // Start Index
 
         /// <summary>
         /// The end index in the password string of the matched token.
         /// </summary>
-        public int j { get; set; } // End Index
+        public int End { get; set; } // End Index
     }
 
 }
